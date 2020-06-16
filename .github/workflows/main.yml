@@ -15,7 +15,7 @@ jobs:
     name: A job to say hello
     steps:
     - name: stats
-      uses: breathingdust/tf-aws-provider-team-stats@v1
+      uses: breathingdust/tf-aws-provider-team-stats@v2
       with:
         token: ${{ secrets.MY_GITHUB_TOKEN}}
     # Use the output from the `hello` step
