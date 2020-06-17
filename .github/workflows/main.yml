@@ -21,4 +21,4 @@ jobs:
       id: stats
     # Use the output from the `hello` step
     - name: Get the output time
-      run: echo "The time was ${{ steps.stats.outputs.stats }}"
+      run: ${{ steps.stats.outputs.stats }} | jq '.[] | .member + " " + (.count|tostring)'
