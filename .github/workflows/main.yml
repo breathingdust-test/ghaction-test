@@ -21,4 +21,6 @@ jobs:
       id: stats
     # Use the output from the `hello` step
     - name: Get the output time
-      run: ${{ steps.stats.outputs.stats }} | jq '.[] | .member + " " + (.count|tostring)'
+      run: echo $json_var | jq '.[] | .member + " " + (.count|tostring)'
+      env:
+        json_var: ${{ steps.stats.outputs.stats}}
