@@ -12,15 +12,10 @@ jobs:
     name: Open PRs for Team Members
     steps:
     - name: stats
-      uses: breathingdust/tf-aws-provider-team-stats@v11
+      uses: breathingdust/tf-aws-provider-team-stats@v12
       with:
-        token: ${{ secrets.MY_GITHUB_TOKEN}}
+        github_token: ${{ secrets.MY_GITHUB_TOKEN}}
         org: terraform-providers
         team_slug: aws-provider
-      id: stats
-    - name: Notify slack
-      env:
-        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-      uses: pullreminders/slack-action@master
-      with:
-        args: '{\"channel\":\"C015HGC9LBU\",\"text\":\"test",\"blocks\":\"${{ steps.stats.outputs.stats_message}}\"}'
+        slack_token: ${{ secrets.SLACK_BOT_TOKEN }}
+        slack_channel: C015HGC9LBU
