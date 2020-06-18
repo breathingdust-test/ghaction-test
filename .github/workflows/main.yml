@@ -12,7 +12,7 @@ jobs:
     name: Open PRs for Team Members
     steps:
     - name: stats
-      uses: breathingdust/tf-aws-provider-team-stats@v12
+      uses: breathingdust/tf-aws-provider-team-stats@v13
       with:
         github_token: ${{ secrets.MY_GITHUB_TOKEN}}
         org: terraform-providers
