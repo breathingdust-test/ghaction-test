@@ -1,21 +1,19 @@
-# This is a basic workflow to help you get started with Actions
-
-name: Test
+name: Team Open PR Counts
 
 on:
-  push:
-    branches: [ master ]
+  schedule:
+    - cron:  '0 3 * * 1-5'
 
 jobs:
-  tf_aws_prov_stats:
+  open-pr-stats:
     runs-on: ubuntu-latest
     name: Open PRs for Team Members
     steps:
-    - name: stats
-      uses: breathingdust/tf-aws-provider-team-stats@v13
+    - name: open-pr-stats
+      uses: breathingdust/github-team-slackbot@v13
       with:
         github_token: ${{ secrets.MY_GITHUB_TOKEN}}
         org: terraform-providers
         team_slug: aws-provider
         slack_token: ${{ secrets.SLACK_BOT_TOKEN }}
-        slack_channel: C015HGC9LBU
+        slack_channel: ${{ secrets.SLACK_CHANNEL }}
