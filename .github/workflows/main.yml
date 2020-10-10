@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Move team PRs to Review column
-    - uses: alex-page/github-project-automation-plus@v0.3.0
+      uses: alex-page/github-project-automation-plus@v0.3.0
       if: github.event.action == 'opened' && contains(fromJSON('["breathingdust"]'), github.actor)
       with:
         project: Test Project
