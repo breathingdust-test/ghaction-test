@@ -1,6 +1,5 @@
 on:
-  pull_request_target:
-      types: [review_requested, ready_for_review]    
+  - pull_request_target
 name: Pull Request Project
 jobs:
   WorkingBoardReview:
@@ -8,7 +7,7 @@ jobs:
     steps:
     - name: Move team PRs to Review column
       uses: alex-page/github-project-automation-plus@v0.3.0
-      if: contains(fromJSON('["breathingdust"]'), github.actor)
+      if: contains(fromJSON('["breathingdust"]'), github.actor) && github.event.pull_request.draft == false
       with:
         project: Test Project
         column: Review
