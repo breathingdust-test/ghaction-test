@@ -1,6 +1,6 @@
 on:
-  - pull_request_target
-    
+  pull_request_target:
+      types: [review_requested, ready_for_review]    
 name: Pull Request Project
 jobs:
   WorkingBoardReview:
