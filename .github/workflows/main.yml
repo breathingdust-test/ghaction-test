@@ -1,7 +1,7 @@
 on:
   - pull_request_target
-
-name: Pull Request Triage
+    
+name: Pull Request Project
 jobs:
   WorkingBoardReview:
     runs-on: ubuntu-latest
