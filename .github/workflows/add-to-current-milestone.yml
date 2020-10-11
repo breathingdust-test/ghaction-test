@@ -12,8 +12,10 @@ jobs:
         run: |
             echo ::set-output name=current_milestone::v$(head -1 CHANGELOG.md | cut -d " " -f 2)
       - run: echo ${{ steps.get-current-milestone.outputs.current_milestone }}
-      - run: |
-          curl --request PATCH \
-              --url ${{ github.event.pull_request.issue_url }} \
-              --header 'authorization: token ${{ secrets.GITHUB_TOKEN }}' \
-              --data '{"milestone": ${{ steps.get-current-milestone.outputs.current_milestone }}}'
+      - uses: actions/github-script@v3
+        with:
+          script: |
+            github.issues.updateIssue({
+              issue_number: context.issue.number,
+              milestone: ${{ steps.get-current-milestone.outputs.current_milestone }}
+            })
