@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: get-current-milestone
+      - id: get-current-milestone
         run: |
             echo ::set-output name=current_milestone::$(head -1 CHANGELOG.md | cut -d " " -f 2)
       - run: echo ${{ steps.get-current-milestone.outputs.current_milestone }}
