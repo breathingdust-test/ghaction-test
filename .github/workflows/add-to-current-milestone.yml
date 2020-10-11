@@ -1,0 +1,14 @@
+on:
+  push:
+    branches:
+      - master
+name: Add merged PRs to current mileston
+jobs:
+  AddMergedToCurrentMilestone:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      run: |
+        CURRENT_MILESTONE=$(cat changelog.md | head -1 | cut -d " " -f 2)
+        echo "::set-env name=CURRENT_MILESTONE::$CURRENT_MILESTONE"
+      run: echo $CURRENT_MILESTONE
