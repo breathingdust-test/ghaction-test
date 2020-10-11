@@ -9,5 +9,5 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: |
-            echo ::set-output name=current_milestone::$(cat CHANGELOG.md | head -1 | cut -d " " -f 2)
+            echo ::set-output name=current_milestone::$(head -1 CHANGELOG.md | cut -d " " -f 2)
       - run: echo ${{ steps.vars.outputs.current_milestone }}
