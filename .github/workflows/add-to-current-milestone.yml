@@ -15,7 +15,9 @@ jobs:
       - id: get-milestone-id 
         run: |
           echo ::set-output name=milestone_id::\
-          ${curl -H "Authorization: Bearer ${{secrets.GITHUB_TOKEN}}" https://api.github.com/repos/$OWNER/$REPO/milestones | jq 'map(select(.title == "${{ steps.get-current-milestone.outputs.current_milestone }}"))[0].number'}
+          ${curl -H "Authorization: Bearer ${{secrets.GITHUB_TOKEN}}" \
+          https://api.github.com/repos/${{ github.event.repository.organization.login }}/${{ github.event.repository.name }}/milestones | \
+          jq 'map(select(.title == "${{ steps.get-current-milestone.outputs.current_milestone }}"))[0].number'}
       - run: echo ${{ steps.get-milestone-id.outputs.milestone_id }}
       - uses: actions/github-script@v3
         with:
