@@ -12,10 +12,14 @@ jobs:
         run: |
             echo ::set-output name=current_milestone::v$(head -1 CHANGELOG.md | cut -d " " -f 2)
       - run: echo ${{ steps.get-current-milestone.outputs.current_milestone }}
+      - id: get-milestone-id 
+        run: |
+          echo ::set-output name=milestone_id::${curl -H "Authorization: Bearer ${GITHUB_TOKEN}" https://api.github.com/repos/terraform-providers/terraform-provider-aws/milestones | jq 'map(select(.title == "v3.11.0"))[0].number'}
+      - run: echo ${{ steps.get-milestone-id.outputs.milestone_id }}
       - uses: actions/github-script@v3
         with:
           script: |
             github.issues.updateIssue({
               issue_number: context.issue.number,
-              milestone: ${{ steps.get-current-milestone.outputs.current_milestone }}
+              milestone: ${{ steps.get-milestone-id.outputs.milestone_id }}
             })
