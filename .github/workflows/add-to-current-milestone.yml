@@ -4,8 +4,8 @@ on:
       - master
 name: Add merged PRs to current milestone
 jobs:
-  if: ${{ github.event.pull_request.merged == true }}
   AddMergedToCurrentMilestone:
+    if: github.event.pull_request.merged == true 
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
