@@ -12,7 +12,7 @@ jobs:
       with:
         issue-number: ${{ github.event.pull_request.number }}
         body: |-
-          Hi ${{github.actor}}, thanks for your contribution! 
+          Hi @${{github.actor}}, thanks for your contribution! :tada:
 
           What happens from here :
 
