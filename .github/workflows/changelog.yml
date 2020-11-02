@@ -9,6 +9,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: breathingdust/previous-release-action@v1
+      - id: parse-changelog
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           path: 'CHANGELOG.md'
+      - run: echo ${{ steps.parse-changelog.outputs.previous-sha }}
+      - run: echo ${{ steps.parse-changelog.outputs.previous-tag }}  
+      - run: echo ${{ steps.parse-changelog.outputs.changelog }}  
+
