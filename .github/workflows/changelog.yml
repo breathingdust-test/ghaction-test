@@ -13,8 +13,7 @@ jobs:
           export previoustag="$(git describe --abbrev=0 --match='v*.*.*' --tags)"
           echo ::set-output name=previous-release-sha::"$(git rev-list -n 1 $previoustag)"
         id: get-previous-release-sha
-      - run: echo ${{ steps.get-previous-release-sha.outputs.previous-release-sha }}
+      - run: echo 
       - run: |
           go get github.com/hashicorp/go-changelog/cmd/changelog-build
-          ls $(go env GOPATH)/bin
-          $(go env GOPATH)/bin/changelog-build
+          $(go env GOPATH)/bin/changelog-build $(git rev-parse HEAD) ${{ steps.get-previous-release-sha.outputs.previous-release-sha }}
