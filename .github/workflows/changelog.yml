@@ -21,6 +21,8 @@ jobs:
             -changelog-template .github/workflows/changelog.tmpl \
             -note-template .github/workflows/release-note.tmpl)"
         id: generate-changelog
-      - run: echo ${{ steps.generate-changelog.outputs.changelog }}
+      - run: |
+          echo ${{ steps.generate-changelog.outputs.changelog }}
+          echo ${{ steps.get-previous-release-sha.outputs.previous-release-sha }}
 
            
