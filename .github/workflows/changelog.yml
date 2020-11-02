@@ -9,5 +9,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: |
+          git fetch --prune --unshallow --tags
           export previoustag="$(git describe --abbrev=0 --match='v*.*.*' --tags)"
           echo ::set-output name=milestone_id::"$(git rev-list -n 1 $previoustag)"
