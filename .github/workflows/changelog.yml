@@ -17,3 +17,4 @@ jobs:
       - run: |
           go get github.com/hashicorp/go-changelog/cmd/changelog-build
           ls $(go env GOPATH)/bin
+          $(go env GOPATH)/bin/changelog-build
