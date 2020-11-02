@@ -16,4 +16,4 @@ jobs:
       - run: echo 
       - run: |
           go get github.com/hashicorp/go-changelog/cmd/changelog-build
-          $(go env GOPATH)/bin/changelog-build $(git rev-parse HEAD) ${{ steps.get-previous-release-sha.outputs.previous-release-sha }}
+          $(go env GOPATH)/bin/changelog-build -this-release $(git rev-parse HEAD) -last-release ${{ steps.get-previous-release-sha.outputs.previous-release-sha }}
