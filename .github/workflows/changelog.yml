@@ -11,4 +11,6 @@ jobs:
       - run: |
           git fetch --prune --unshallow --tags
           export previoustag="$(git describe --abbrev=0 --match='v*.*.*' --tags)"
-          echo ::set-output name=milestone_id::"$(git rev-list -n 1 $previoustag)"
+          echo ::set-output name=previous-release-sha::"$(git rev-list -n 1 $previoustag)"
+        id: get-previous-release-sha
+      - run: echo ${{ steps.get-previous-release-sha.outputs.previous-release-sha }}
