@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: breathingdust/previous-release-action@v1
-      - id: parse-changelog
+        id: parse-changelog
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           path: 'CHANGELOG.md'
