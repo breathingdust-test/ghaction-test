@@ -14,3 +14,6 @@ jobs:
           echo ::set-output name=previous-release-sha::"$(git rev-list -n 1 $previoustag)"
         id: get-previous-release-sha
       - run: echo ${{ steps.get-previous-release-sha.outputs.previous-release-sha }}
+      - run: |
+          go get github.com/hashicorp/go-changelog/cmd/changelog-build
+          ls $(go env GOPATH)/bin
