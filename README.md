@@ -3,6 +3,3 @@ ghaction-test
 sdfsdfsdsd
 sdd
 sdd
-dfgdfg
-dd
-f
