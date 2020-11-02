@@ -19,6 +19,6 @@ jobs:
           $(go env GOPATH)/bin/changelog-build -this-release $(git rev-parse HEAD) \
             -last-release ${{ steps.get-previous-release-sha.outputs.previous-release-sha }} \
             -entries-dir .changelog \
-            -changelog-template changelog.tmpl \
-            -note-template release-note.tmpl 
+            -changelog-template .github/workflows/changelog.tmpl \
+            -note-template .github/workflows/release-note.tmpl 
            
