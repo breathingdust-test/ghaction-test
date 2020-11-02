@@ -13,7 +13,6 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           path: 'CHANGELOG.md'
-      - run: echo ${{ steps.parse-changelog.outputs.previous-sha }}
-      - run: echo ${{ steps.parse-changelog.outputs.previous-tag }}  
-      - run: echo ${{ steps.parse-changelog.outputs.changelog }}  
-
+      - uses: actions/setup-go@v2
+      - run: go get github.com/hashicorp/go-changelog/cmd/changelog-build
+      - run: changelog-build ${{ env.GITHUB_SHA}} ${{ steps.parse-changelog.outputs.previous_sha }}
