@@ -18,7 +18,7 @@ jobs:
           go get github.com/hashicorp/go-changelog/cmd/changelog-build
           $(go env GOPATH)/bin/changelog-build -this-release $(git rev-parse HEAD) \
             -last-release ${{ steps.get-previous-release-sha.outputs.previous-release-sha }} \
-            -entries-dir .changelog
-            -changelog-template changelog.tmpl
+            -entries-dir .changelog \
+            -changelog-template changelog.tmpl \
             -note-template release-note.tmpl 
            
