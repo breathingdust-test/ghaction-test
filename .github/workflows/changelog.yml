@@ -16,4 +16,5 @@ jobs:
       - uses: actions/setup-go@v2
       - run: |
           go get github.com/hashicorp/go-changelog/cmd/changelog-build
+          echo $PATH
           changelog-build ${{ env.GITHUB_SHA}} ${{ steps.parse-changelog.outputs.previous_sha }}
