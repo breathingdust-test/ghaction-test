@@ -13,12 +13,14 @@ jobs:
           export previoustag="$(git describe --abbrev=0 --match='v*.*.*' --tags)"
           echo ::set-output name=previous-release-sha::"$(git rev-list -n 1 $previoustag)"
         id: get-previous-release-sha
-      - run: echo 
       - run: |
           go get github.com/hashicorp/go-changelog/cmd/changelog-build
-          $(go env GOPATH)/bin/changelog-build -this-release $(git rev-parse HEAD) \
+          echo ::set-output name=changelog::$(go env GOPATH)/bin/changelog-build -this-release $(git rev-parse HEAD) \
             -last-release ${{ steps.get-previous-release-sha.outputs.previous-release-sha }} \
             -entries-dir .changelog \
             -changelog-template .github/workflows/changelog.tmpl \
-            -note-template .github/workflows/release-note.tmpl 
+            -note-template .github/workflows/release-note.tmpl
+        id: generate-changelog
+      - run: echo ${{ steps.generate-changelog.outputs.changelog }}
+
            
