@@ -8,16 +8,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: breathingdust/previous-release-action@v1
-        id: parse-changelog
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          path: 'CHANGELOG.md'
-      - uses: actions/setup-go@v2
       - run: |
-          go get github.com/hashicorp/go-changelog/cmd/changelog-build
-          echo $PATH
-          echo $(go version) at $(which go)
-          echo go version: $(go version)
-          echo go env: $(go env GOPATH)           
-          changelog-build ${{ env.GITHUB_SHA}} ${{ steps.parse-changelog.outputs.previous_sha }}
+          export previoustag="$(git describe --abbrev=0 --match='v*.*.*' --tags)"
+          echo ::set-output name=milestone_id::"$(git rev-list -n 1 $previoustag)"
