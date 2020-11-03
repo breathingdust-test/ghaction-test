@@ -23,8 +23,14 @@ jobs:
                       -note-template .github/workflows/release-note.tmpl >> $GITHUB_ENV      
           echo 'EOF' >> $GITHUB_ENV
         id: generate-changelog
+      - uses: breathingdust/changelog-replace-action@v1
+        with:
+          path: CHANGELOG.md
+          contents: $CHANGELOG
       - run: |
-          echo $CHANGELOG
-          echo ${{ steps.get-previous-release-sha.outputs.previous-release-sha }}
+          git config --local user.email "hashibot@hashicorp.com"
+          git config --local user.name "HashiBot"
+          git commit -m "Update CHANGELOG.md for ${{ github.event.pull_request.number }}" 
+          git push
 
            
