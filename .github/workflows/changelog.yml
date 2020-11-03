@@ -26,7 +26,7 @@ jobs:
       - uses: breathingdust/changelog-replace-action@v1
         with:
           path: CHANGELOG.md
-          contents: $CHANGELOG
+          changelog: $CHANGELOG
       - run: |
           git config --local user.email "hashibot@hashicorp.com"
           git config --local user.name "HashiBot"
