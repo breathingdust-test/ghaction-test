@@ -23,10 +23,13 @@ jobs:
                       -note-template .github/workflows/release-note.tmpl >> $GITHUB_ENV      
           echo 'EOF' >> $GITHUB_ENV
         id: generate-changelog
+      - run: |
+          echo ::set-output name=changelog::$CHANGELOG
+          id: assign-changelog
       - uses: breathingdust/changelog-replace-action@v1
         with:
           path: CHANGELOG.md
-          changelog: ${{ $CHANGELOG }}
+          changelog: ${{ steps.assign-changelog.outputs.changelog }}
       - run: |
           git config --local user.email "hashibot@hashicorp.com"
           git config --local user.name "HashiBot"
