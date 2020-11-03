@@ -22,7 +22,7 @@ jobs:
                       -changelog-template .github/workflows/changelog.tmpl \
                       -note-template .github/workflows/release-note.tmpl >> $GITHUB_ENV      
           echo 'EOF' >> $GITHUB_ENV
-          id: generate-changelog
+        id: generate-changelog
       - run: |
           echo $CHANGELOG
           echo ${{ steps.get-previous-release-sha.outputs.previous-release-sha }}
