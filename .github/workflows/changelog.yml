@@ -15,14 +15,16 @@ jobs:
         id: get-previous-release-sha
       - run: |
           go get github.com/hashicorp/go-changelog/cmd/changelog-build
-          echo ::set-output name=changelog::"$($(go env GOPATH)/bin/changelog-build -this-release $(git rev-parse HEAD) \
-            -last-release ${{ steps.get-previous-release-sha.outputs.previous-release-sha }} \
-            -entries-dir .changelog \
-            -changelog-template .github/workflows/changelog.tmpl \
-            -note-template .github/workflows/release-note.tmpl)"
+          echo 'CHANGELOG<<EOF' >> $GITHUB_ENV
+          $($(go env GOPATH)/bin/changelog-build -this-release $(git rev-parse HEAD) \
+                      -last-release ${{ steps.get-previous-release-sha.outputs.previous-release-sha }} \
+                      -entries-dir .changelog \
+                      -changelog-template .github/workflows/changelog.tmpl \
+                      -note-template .github/workflows/release-note.tmpl) >> $GITHUB_ENV      
+          echo 'EOF' >> $GITHUB_ENV
         id: generate-changelog
       - run: |
-          echo ${{ steps.generate-changelog.outputs.changelog }}
+          echo $GITHUB_ENV
           echo ${{ steps.get-previous-release-sha.outputs.previous-release-sha }}
 
            
