@@ -30,6 +30,7 @@ jobs:
       - run: |
           git config --local user.email "hashibot@hashicorp.com"
           git config --local user.name "HashiBot"
+          git add CHANGELOG.md
           git commit -m "Update CHANGELOG.md for ${{ github.event.pull_request.number }}" 
           git push
 
