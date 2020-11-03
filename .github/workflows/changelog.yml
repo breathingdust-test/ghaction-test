@@ -25,7 +25,7 @@ jobs:
         id: generate-changelog
       - run: |
           echo ::set-output name=changelog::$CHANGELOG
-          id: assign-changelog
+        id: assign-changelog
       - uses: breathingdust/changelog-replace-action@v1
         with:
           path: CHANGELOG.md
