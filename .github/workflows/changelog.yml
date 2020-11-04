@@ -8,29 +8,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: |
-          git fetch --prune --unshallow --tags
-          export previoustag="$(git describe --abbrev=0 --match='v*.*.*' --tags)"
-          echo ::set-output name=previous-release-sha::"$(git rev-list -n 1 $previoustag)"
+        with:
+          fetch-depth: 0
         id: get-previous-release-sha
       - run: |
-          go get github.com/hashicorp/go-changelog/cmd/changelog-build
-          echo 'CHANGELOG<<EOF' >> $GITHUB_ENV
-          $(go env GOPATH)/bin/changelog-build -this-release $(git rev-parse HEAD) \
-                      -last-release ${{ steps.get-previous-release-sha.outputs.previous-release-sha }} \
-                      -entries-dir .changelog \
-                      -changelog-template .github/workflows/changelog.tmpl \
-                      -note-template .github/workflows/release-note.tmpl >> $GITHUB_ENV      
-          echo 'EOF' >> $GITHUB_ENV
-        id: generate-changelog
-      - uses: breathingdust/changelog-replace-action@v2
-        with:
-          path: CHANGELOG.md
-      - run: |
+          scripts/changelog.sh
           git config --local user.email "hashibot@hashicorp.com"
           git config --local user.name "HashiBot"
           git add CHANGELOG.md
           git commit -m "Update CHANGELOG.md for ${{ github.event.pull_request.number }}" 
-          git push
-
-           
+          git push          
