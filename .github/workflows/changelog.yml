@@ -12,7 +12,7 @@ jobs:
           fetch-depth: 0
         id: get-previous-release-sha
       - run: |
-          scripts/changelog.sh
+          ./scripts/changelog.sh
           git config --local user.email "hashibot@hashicorp.com"
           git config --local user.name "HashiBot"
           git add CHANGELOG.md
