@@ -10,7 +10,6 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-        id: get-previous-release-sha
       - run: |
           ./scripts/changelog.sh
           git config --local user.email "hashibot@hashicorp.com"
