@@ -7,7 +7,7 @@ jobs:
     if: github.event.pull_request_target.merged
     runs-on: ubuntu-latest
     steps:
-      - run: echo ${{ github.event.pull_request_target.base.ref }}
+      - run: echo ${{ github.event }}
       - uses: actions/checkout@v2
         with:
           ref: github.event.pull_request_target.base.ref
