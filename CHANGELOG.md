@@ -1,4 +1,4 @@
-## 3.11.0 (Unreleased)
+## 3.12.0 (Unreleased)
 
 FEATURES:
 * **New Resource:** `google_app_engine_service_split_traffic` ([GH-45])
