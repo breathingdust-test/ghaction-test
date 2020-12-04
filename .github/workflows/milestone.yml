@@ -4,13 +4,13 @@ on:
 name: Add merged PRs to current milestone
 jobs:
   AddMergedToCurrentMilestone:
-    if: github.event.pull_request.merged
+    if: github.event.pull_request_target.merged
     runs-on: ubuntu-latest
     steps:
       - run: echo ${{ github.event.pull_request_target.base.ref }}
       - uses: actions/checkout@v2
         with:
-          ref: ${{ github.event.pull_request_target.base.ref }}
+          ref: github.event.pull_request_target.base.ref
       - id: get-current-milestone
         run: |
             echo ::set-output name=current_milestone::v$(head -1 CHANGELOG.md | cut -d " " -f 2)
