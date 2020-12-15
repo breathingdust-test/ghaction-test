@@ -5,7 +5,7 @@ jobs:
   RunInEnvironment:
     runs-on: ubuntu-latest
     environment:
-      name: test
+      name: Run Acceptance Tests
     steps:
       - run: echo ${{ github.event }}
     
