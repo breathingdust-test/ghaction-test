@@ -8,4 +8,5 @@ jobs:
       name: Run Acceptance Tests
     steps:
       - run: echo ${{ github.event }}
+      - run: exit 1
     
