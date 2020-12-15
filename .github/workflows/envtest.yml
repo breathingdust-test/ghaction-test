@@ -1,0 +1,11 @@
+on:
+  push
+name: Pull Request Project
+jobs:
+  RunInEnvironment:
+    runs-on: ubuntu-latest
+    environment:
+      name: test
+    steps:
+      - run: echo ${{ github.event }}
+    
