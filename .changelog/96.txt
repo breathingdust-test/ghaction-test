@@ -1,0 +1,31 @@
+```release-note:breaking-change
+This is a breaking-change
+```
+
+```release-note:note
+This is a note
+```
+
+```release-note:new-resource
+This is a new-resource
+```
+
+```release-note:new-data-source
+This is a new-data-source
+```
+
+```release-note:new-guide
+This is a new-guide
+```
+
+```release-note:new-guide
+This is a new-guide
+```
+
+```release-note:enhancement
+This is a enhancement
+```
+
+```release-note:bug
+This is a bug
+```
