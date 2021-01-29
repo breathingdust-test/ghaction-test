@@ -15,4 +15,4 @@ jobs:
       - run: ./scripts/generate-changelog.sh
       - run: |
           if [ ${{github.event_name == 'workflow_dispatch'}} ]; then MSG="Update CHANGELOG.md (Manual Trigger)"; else MSG="Update CHANGELOG.md for #${{ github.event.pull_request.number }}"; fi      
-          ./scripts/push-changes.sh "changelogbot@hashicorp.com" "changelogbot" $MSG
+          ./scripts/push-changes.sh "changelogbot@hashicorp.com" "changelogbot" "$MSG"
