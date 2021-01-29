@@ -1,0 +1,4 @@
+
+```release-note:enhancement
+data-source/sdfdsfsdf: Adds `arn` attribute
+```
