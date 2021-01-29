@@ -2,8 +2,13 @@ name: Generate CHANGELOG
 on:
   pull_request:
     types: [closed]
+  workflow_dispatch:
 jobs:
-  GenerateChangelog:
+  DoThing:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "${{ github.event.action }}"
+  GenerateChangelog: 
     if: github.event.pull_request.merged
     runs-on: ubuntu-latest
     steps:
