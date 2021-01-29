@@ -13,4 +13,6 @@ if [[ `git status --porcelain` ]]; then
     git add CHANGELOG.md
     git commit -m $3 
     git push
+else
+    echo "No changes to push"
 fi
