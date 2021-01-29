@@ -26,10 +26,12 @@ ENHANCEMENTS:
 * data-source/sdfdsfsdf: Adds `arn` attribute ([#103](https://github.com/hashicorp/terraform-provider-aws/issues/103))
 * data-source/sdfdsfsdf: Adds `arn` attribute ([#104](https://github.com/hashicorp/terraform-provider-aws/issues/104))
 * data-source/sdfdsfsdf: Adds `arn` attribute ([#105](https://github.com/hashicorp/terraform-provider-aws/issues/105))
+* data-source/sdfdsfsdf: Adds `arn` attribute ([#106](https://github.com/hashicorp/terraform-provider-aws/issues/106))
 * resource/aws_elasticache_replication_group: Adds `arn` attribute ([#12121](https://github.com/hashicorp/terraform-provider-aws/issues/12121))
 * resource/sdfsdfsdfsd: Adds `arn` attribute ([#103](https://github.com/hashicorp/terraform-provider-aws/issues/103))
 * resource/sdfsdfsdfsd: Adds `arn` attribute ([#104](https://github.com/hashicorp/terraform-provider-aws/issues/104))
 * resource/sdfsdfsdfsd: Adds `arn` attribute ([#105](https://github.com/hashicorp/terraform-provider-aws/issues/105))
+* resource/sdfsdfsdfsd: Adds `arn` attribute ([#106](https://github.com/hashicorp/terraform-provider-aws/issues/106))
 
 BUG FIXES:
 
