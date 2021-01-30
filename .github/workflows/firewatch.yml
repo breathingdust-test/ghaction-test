@@ -1,0 +1,11 @@
+
+on:
+  workflow_dispatch:
+name: Firewatch
+jobs:
+  DownloadArtifact:
+    steps:
+    - uses: actions/download-artifact@v2
+      with:
+        name: firewatch
+      continue-on-error: true
