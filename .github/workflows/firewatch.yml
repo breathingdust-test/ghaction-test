@@ -11,6 +11,17 @@ jobs:
       with:
         name: firewatch
       continue-on-error: true
+    - name: Firewatch
+      uses: breathingdust/firewatch@v1
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        org: testorg-ghprovider
+        repo: ghaction-test
+        alertThreshold: 1
+        firewatchData: firewatch.data
+        issue_age_months: 1
+        slackToken: 1
+        slackChannel: 1
     - name: UploadArtifact
       uses: actions/upload-artifact@v2
       with:
