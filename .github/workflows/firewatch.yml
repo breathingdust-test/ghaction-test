@@ -3,10 +3,16 @@ on:
   workflow_dispatch:
 name: Firewatch
 jobs:
-  DownloadArtifact:
+  FirewatchJob:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/download-artifact@v2
+    - name: DownloadArtifact
+      uses: actions/download-artifact@v2
       with:
         name: firewatch
       continue-on-error: true
+    - name: UploadArtifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: firewatch
+        if-no-files-found: error
