@@ -17,11 +17,11 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         org: testorg-ghprovider
         repo: ghaction-test
-        alertThreshold: 1
-        firewatchData: firewatch.data
+        alert_threshold: 1
+        firewatch_data: firewatch.data
         issue_age_months: 1
-        slackToken: 1
-        slackChannel: 1
+        slack_token: 1
+        slack_channel: 1
     - name: UploadArtifact
       uses: actions/upload-artifact@v2
       with:
