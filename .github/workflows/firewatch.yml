@@ -28,5 +28,5 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: firewatch
-        path: firewatch.json
+        path: firewatch.data
         if-no-files-found: error
