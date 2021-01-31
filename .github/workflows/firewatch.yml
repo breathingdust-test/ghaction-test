@@ -8,11 +8,6 @@ jobs:
   FirewatchJob:
     runs-on: ubuntu-latest
     steps:
-    - name: DownloadArtifact
-      uses: actions/download-artifact@v2
-      with:
-        name: firewatch
-      continue-on-error: true
     - name: Firewatch
       uses: breathingdust/firewatch@v1
       with:
@@ -20,7 +15,6 @@ jobs:
         org: testorg-ghprovider
         repo: ghaction-test
         alert_threshold: 1
-        firewatch_data: firewatch.data
         issue_age_months: 1
         slack_token: 1
         slack_channel: 1
