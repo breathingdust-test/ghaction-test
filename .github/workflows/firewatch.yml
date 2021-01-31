@@ -18,7 +18,6 @@ jobs:
         issue_age_months: 1
         slack_token: 1
         slack_channel: 1
-    - run: ls -al
     - name: UploadArtifact
       uses: actions/upload-artifact@v2
       with:
