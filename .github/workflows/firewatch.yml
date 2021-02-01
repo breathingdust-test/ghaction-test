@@ -22,3 +22,4 @@ jobs:
         name: firewatch
         path: firewatch.data
         if-no-files-found: error
+        retention-days: 1
