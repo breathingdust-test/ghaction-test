@@ -32,3 +32,7 @@ jobs:
           else
             echo "changelog-check: Found .changelog entry in PR!"
           fi
+   ChangelogCheckOpenB:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo ${{github.event.pull_request.labels}}
