@@ -17,7 +17,7 @@ jobs:
           # check if there is a diff in the .changelog directory
           changelog_files=$(git --no-pager diff --name-only HEAD "$(git merge-base HEAD "origin/${{ github.event.pull_request.base.ref }}")" -- .changelog/)
           # If we do not find a file in .changelog/, we post a comment to the PR
-          if [[ -z "$changelog_files" && ${{github.event.action}} == 'opened']]; then
+          if [[ -z "$changelog_files" && ${{github.event.action}} == 'opened' ]]; then
             # post PR comment to GitHub when no .changelog entry was found on PR
             echo "changelog-check: Did not find a .changelog entry, posting a reminder in the PR"
             github_message="🤔 Double check that this PR does not require a changelog entry in the \`.changelog\` directory. [Reference](https://github.com/hashicorp/terraform-provider-aws/blob/main/docs/contributing/pullrequest-submission-and-lifecycle.md#changelog-process)"
@@ -26,7 +26,7 @@ jobs:
                 -d "{ \"body\": \"${github_message}\"}" \
                 "https://api.github.com/repos/${GITHUB_REPOSITORY}/issues/${{ github.event.pull_request.number }}/comments"
             exit 1
-          elif [[ -z "$changelog_files" && ${{github.event.action}} != 'opened']]; then
+          elif [[ -z "$changelog_files" && ${{github.event.action}} != 'opened' ]]; then
             echo "changelog-check: No .changelog entry found in PR!"
             exit 1
           else
