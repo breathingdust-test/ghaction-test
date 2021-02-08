@@ -35,4 +35,4 @@ jobs:
    ChangelogCheckOpenB:
     runs-on: ubuntu-latest
     steps:
-      - run: echo ${{github.event.pull_request.labels}}
+      - run: echo ${{github.event.pull_request}}
