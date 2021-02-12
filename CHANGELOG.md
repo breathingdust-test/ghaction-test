@@ -16,6 +16,7 @@ FEATURES:
 * **New Resource:** `This is a new-resource` ([#96](https://github.com/hashicorp/terraform-provider-aws/issues/96))
 * **New Resource:** ``google_app_engine_service_split_traffic`` ([#45](https://github.com/hashicorp/terraform-provider-aws/issues/45))
 * **New Resource:** ``new thingy`` ([#65](https://github.com/hashicorp/terraform-provider-aws/issues/65))
+* **New Resource:** `aws_sagemaker_app_image_config` ([#3](https://github.com/hashicorp/terraform-provider-aws/issues/3))
 
 ENHANCEMENTS:
 
@@ -40,6 +41,7 @@ BUG FIXES:
 * This is a bug ([#96](https://github.com/hashicorp/terraform-provider-aws/issues/96))
 * This is a bug ([#97](https://github.com/hashicorp/terraform-provider-aws/issues/97))
 * resource/aws_elasticache_replication_group: Correctly update computed `member_clusters` values ([#129](https://github.com/hashicorp/terraform-provider-aws/issues/129))
+* resource/aws_sagemaker_code_repository: fix doc name ([#3](https://github.com/hashicorp/terraform-provider-aws/issues/3))
 * resource/lakeformation_data_lake_settings: Avoid unnecessary resource cycling ([#2](https://github.com/hashicorp/terraform-provider-aws/issues/2))
 * resource/lakeformation_permissions: Handle resources with multiple permissions ([#2](https://github.com/hashicorp/terraform-provider-aws/issues/2))
 
