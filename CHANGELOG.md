@@ -40,5 +40,7 @@ BUG FIXES:
 * This is a bug ([#96](https://github.com/hashicorp/terraform-provider-aws/issues/96))
 * This is a bug ([#97](https://github.com/hashicorp/terraform-provider-aws/issues/97))
 * resource/aws_elasticache_replication_group: Correctly update computed `member_clusters` values ([#129](https://github.com/hashicorp/terraform-provider-aws/issues/129))
+* resource/lakeformation_data_lake_settings: Avoid unnecessary resource cycling ([#2](https://github.com/hashicorp/terraform-provider-aws/issues/2))
+* resource/lakeformation_permissions: Handle resources with multiple permissions ([#2](https://github.com/hashicorp/terraform-provider-aws/issues/2))
 
 ## 3.10.0 (October 09, 2020)
