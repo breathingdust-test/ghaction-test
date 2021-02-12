@@ -39,5 +39,6 @@ BUG FIXES:
 
 * This is a bug ([#96](https://github.com/hashicorp/terraform-provider-aws/issues/96))
 * This is a bug ([#97](https://github.com/hashicorp/terraform-provider-aws/issues/97))
+* resource/aws_elasticache_replication_group: Correctly update computed `member_clusters` values ([#129](https://github.com/hashicorp/terraform-provider-aws/issues/129))
 
 ## 3.10.0 (October 09, 2020)
