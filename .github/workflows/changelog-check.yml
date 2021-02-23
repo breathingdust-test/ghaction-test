@@ -1,19 +1,14 @@
 on:
   - pull_request_target
 
-name: Pull Request Target (All types)
+name: Changelog Check
 jobs:
-   ChangelogChecks:
-    # If there  a `pr/no-changelog` label we ignore this check
+  changes:
     if: "${{!contains(github.event.pull_request.labels.*.name, 'pr/no-changelog')}}"
     runs-on: ubuntu-latest
     outputs:
-      changed: ${{ steps.changes.outputs.changed }}    
+      changed: ${{ steps.changes.outputs.changelog }}    
     steps:
-      - uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-          fetch-depth: 0 # by default the checkout action doesn't checkout all branches
       - name: Check for changelog entry in diff
         uses: dorny/paths-filter@v2
         id: changes
@@ -21,15 +16,20 @@ jobs:
           filters: |
             changelog:
               - '.changelog/**'
-      - if: steps.changes.outputs.changed != 'true' && github.event.action == 'opened'
-        uses: peter-evans/create-or-update-comment@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          issue-number: ${{ github.event.pull_request.number }}
-          body: |-
-            🤔 Double check that this PR does not require a changelog entry in the `.changelog` directory. [Reference](https://github.com/hashicorp/terraform-provider-aws/blob/main/docs/contributing/pullrequest-submission-and-lifecycle.md#changelog-process)
-      - if: steps.changes.outputs.changed != 'true'
-        run: |
-            echo "changelog-check: No .changelog entry found in PR! See: https://github.com/hashicorp/terraform-provider-aws/blob/main/docs/contributing/pullrequest-submission-and-lifecycle.md#changelog-process"
-            exit 1
+  comment:
+    needs: changes
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo ${{needs.changes.outputs.changed}}
+    - if: needs.changes.outputs.changed != 'true' && github.event.action == 'opened'
+      uses: peter-evans/create-or-update-comment@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        issue-number: ${{ github.event.pull_request.number }}
+        body: |-
+          🤔 Double check that this PR does not require a changelog entry in the `.changelog` directory. [Reference](https://github.com/hashicorp/terraform-provider-aws/blob/main/docs/contributing/pullrequest-submission-and-lifecycle.md#changelog-process)
+    - if: steps.changes.outputs.changed != 'true'
+      run: |
+          echo "changelog-check: No .changelog entry found in PR! See: https://github.com/hashicorp/terraform-provider-aws/blob/main/docs/contributing/pullrequest-submission-and-lifecycle.md#changelog-process"
+          exit 1
