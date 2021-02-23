@@ -1,5 +1,8 @@
 on:
-  - pull_request_target
+  pull_request_target:
+    paths:
+      - 'aws/*'
+      - '!aws/*_test.go'  
 
 name: Changelog Check
 jobs:
@@ -15,7 +18,7 @@ jobs:
         with:
           filters: |
             changelog:
-              - '.changelog/**'
+              - '.changelog/*.txt'
   comment:
     needs: changes
     runs-on: ubuntu-latest
