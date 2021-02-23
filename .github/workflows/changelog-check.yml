@@ -28,8 +28,8 @@ jobs:
         with:
           issue-number: ${{ github.event.pull_request.number }}
           body: |-
-            🤔 Double check that this PR does not require a changelog entry in the \`.changelog\` directory. [Reference](https://github.com/hashicorp/terraform-provider-aws/blob/main/docs/contributing/pullrequest-submission-and-lifecycle.md#changelog-process)
+            🤔 Double check that this PR does not require a changelog entry in the `.changelog` directory. [Reference](https://github.com/hashicorp/terraform-provider-aws/blob/main/docs/contributing/pullrequest-submission-and-lifecycle.md#changelog-process)
       - if: steps.changes.outputs.changed != 'true'
         run: |
-            echo "changelog-check: No .changelog entry found in PR!"
+            echo "changelog-check: No .changelog entry found in PR! See: https://github.com/hashicorp/terraform-provider-aws/blob/main/docs/contributing/pullrequest-submission-and-lifecycle.md#changelog-process"
             exit 1
