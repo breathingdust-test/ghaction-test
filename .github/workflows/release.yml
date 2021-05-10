@@ -11,7 +11,7 @@ jobs:
       - uses: breathingdust/github-asana-tidy@v1
         id: filter
         with:
-          asana-pat: ${{ secrets.asana_pat }}
+          asana_pat: ${{ secrets.asana_pat }}
           asana_target_section_gid: ${{ secrets.asana_target_section_gid }}
           asana_workspace_gid: ${{ secrets.asana_workspace_gid }}
           asana_project_gid: ${{ secrets.asana_project_gid }}
