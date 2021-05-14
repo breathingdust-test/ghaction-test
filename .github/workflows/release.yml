@@ -6,18 +6,18 @@ jobs:
       runs-on: ubuntu-latest
       steps:
         - run: |
-          CHANGELOG_FILE_NAME="CHANGELOG.md"
-          PREVIOUS_RELEASE_TAG=$(git describe --abbrev=0 --match='v*.*.*' --tags)
-          echo Previous release is: $PREVIOUS_RELEASE_TAG
+            CHANGELOG_FILE_NAME="CHANGELOG.md"
+            PREVIOUS_RELEASE_TAG=$(git describe --abbrev=0 --match='v*.*.*' --tags)
+            echo Previous release is: $PREVIOUS_RELEASE_TAG
 
-          NEW_RELEASE_LINE=$(echo $PREVIOUS_RELEASE_TAG | awk -F. '{
-              $1 = substr($1,2)
-              $2 += 1
-              printf("%s.%02d.%s\n", $1, $2, $3);
-          }')
+            NEW_RELEASE_LINE=$(echo $PREVIOUS_RELEASE_TAG | awk -F. '{
+                $1 = substr($1,2)
+                $2 += 1
+                printf("%s.%02d.%s\n", $1, $2, $3);
+            }')
 
-          echo New minor version is: v$NEW_RELEASE_LINE
+            echo New minor version is: v$NEW_RELEASE_LINE
 
-          echo -e "## $NEW_RELEASE_LINE (Unreleased)\n$(cat $CHANGELOG_FILE_NAME)" > $CHANGELOG_FILE_NAME
-          
-          line=$(head -n 1 filename)
+            echo -e "## $NEW_RELEASE_LINE (Unreleased)\n$(cat $CHANGELOG_FILE_NAME)" > $CHANGELOG_FILE_NAME
+
+            line=$(head -n 1 filename)
