@@ -23,4 +23,4 @@ jobs:
 
             echo -e "## $NEW_RELEASE_LINE (Unreleased)\n$(cat $CHANGELOG_FILE_NAME)" > $CHANGELOG_FILE_NAME
 
-            line=$(head -n 1 $CHANGELOG_FILE_NAME)
+            echo $(head -n 1 $CHANGELOG_FILE_NAME)
