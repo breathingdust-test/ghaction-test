@@ -22,5 +22,9 @@ jobs:
             echo New minor version is: v$NEW_RELEASE_LINE
 
             echo -e "## $NEW_RELEASE_LINE (Unreleased)\n$(cat $CHANGELOG_FILE_NAME)" > $CHANGELOG_FILE_NAME
-
-            echo $(head -n 1 $CHANGELOG_FILE_NAME)
+        - run: |
+              git config --local user.email changelogbot@hashicorp.com
+              git config --local user.name changelogbot
+              git add CHANGELOG.md
+              git commit -m "Update CHANGELOG.md after thing" 
+              git push
