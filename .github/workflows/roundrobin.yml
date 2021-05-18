@@ -8,12 +8,12 @@ jobs:
     if: github.event.action == 'opened' && !contains(fromJSON('["breathingdust"]'), github.actor)
     steps:
       run: |
-        PREVIOUS_RUN_ID=$(curl -sL -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/hashicorp/terraform-provider-aws/actions/workflows/firewatch.yml/runs | jq -r '.workflow_runs[0].id?')
+        PREVIOUS_RUN_ID=$(curl -sL -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/testorg-ghprovider/ghaction-test/actions/workflows/firewatch.yml/runs | jq -r '.workflow_runs[0].id?')
 
         if [ ! -z "$PREVIOUS_RUN_ID" ]
         then
-          ARTIFACT_ID=$(curl -sL -H "Authorization: token $GITHUB_TOKEN"  https://api.github.com/repos/hashicorp/terraform-provider-aws/actions/runs/$PREVIOUS_RUN_ID/artifacts | jq -r '.artifacts[0].id?')
-          ARTIFACT_HEADER=$(curl -sLI -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/hashicorp/terraform-provider-aws/actions/artifacts/$ARTIFACT_ID/zip | grep -Fi location:)
+          ARTIFACT_ID=$(curl -sL -H "Authorization: token $GITHUB_TOKEN"  https://api.github.com/repos/testorg-ghprovider/ghaction-test/actions/runs/$PREVIOUS_RUN_ID/artifacts | jq -r '.artifacts[0].id?')
+          ARTIFACT_HEADER=$(curl -sLI -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/testorg-ghprovider/ghaction-test/actions/artifacts/$ARTIFACT_ID/zip | grep -Fi location:)
           ARTIFACT_URL=$(echo $ARTIFACT_HEADER | cut -d' ' -f 2)
 
           ROUNDROBIN_FILENAME=roundrobin.zip
@@ -53,9 +53,9 @@ jobs:
           --header "Authorization: token $GITHUB_TOKEN" \
           --request POST \
           --data '{"reviewers":["$NEXT_REVIEWER"]}' \
-          https://api.github.com/repos/hashicorp/terraform-provider-aws/pulls/${{github.event.thing}}/requested_reviewers
+          https://api.github.com/repos/testorg-ghprovider/ghaction-test/pulls/${{github.event.thing}}/requested_reviewers
       upload:
         - uses: actions/upload-artifact@v2
-        with:
-          name: roundrobin
-          path: roundrobin
+          with:
+            name: roundrobin
+            path: roundrobin
