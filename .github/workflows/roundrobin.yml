@@ -1,6 +1,5 @@
 on:
-  - pull_request_target
-
+  - pull_request
 name: RoundRobin
 jobs:
   MaintainerPRAssign:
