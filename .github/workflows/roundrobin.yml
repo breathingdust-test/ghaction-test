@@ -52,7 +52,7 @@ jobs:
             --header "Authorization: token $GITHUB_TOKEN" \
             --request POST \
             --data '{"reviewers":["$NEXT_REVIEWER"]}' \
-            https://api.github.com/repos/testorg-ghprovider/ghaction-test/pulls/${{github.event.thing}}/requested_reviewers
+            https://api.github.com/repos/testorg-ghprovider/ghaction-test/pulls/${{github.event.number}}/requested_reviewers
       - uses: actions/upload-artifact@v2
         name: upload
         with:
