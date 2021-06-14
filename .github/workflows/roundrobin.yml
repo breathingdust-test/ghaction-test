@@ -12,6 +12,7 @@ jobs:
           
           if [ ! -z "$PREVIOUS_RUN_ID" ]
           then
+            echo "hi"
             ARTIFACT_ID=$(curl -sL -H "Authorization: token $GITHUB_TOKEN"  https://api.github.com/repos/testorg-ghprovider/ghaction-test/actions/runs/$PREVIOUS_RUN_ID/artifacts | jq -r '.artifacts[0].id?')
             ARTIFACT_HEADER=$(curl -sLI -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/testorg-ghprovider/ghaction-test/actions/artifacts/$ARTIFACT_ID/zip | grep -Fi location:)
             ARTIFACT_URL=$(echo $ARTIFACT_HEADER | cut -d' ' -f 2)
