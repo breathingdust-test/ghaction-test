@@ -10,15 +10,21 @@ jobs:
           PREVIOUS_RUN_ID=$(curl -sL -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/testorg-ghprovider/ghaction-test/actions/workflows/roundrobin.yml/runs | jq -r '.workflow_runs[0].id?')
           echo $PREVIOUS_RUN_ID
           
-          if [[ ! -z $PREVIOUS_RUN_ID ]]
+          if [[ $PREVIOUS_RUN_ID != "null" ]]
           then
-            echo "1"
-          fi  
-          
-          if [[ $PREVIOUS_RUN_ID == "null" ]]
-          then
-            echo "2"
-          fi             
+            ARTIFACT_ID=$(curl -sL -H "Authorization: token $GITHUB_TOKEN"  https://api.github.com/repos/testorg-ghprovider/ghaction-test/actions/runs/$PREVIOUS_RUN_ID/artifacts | jq -r '.artifacts[0].id?')
+            ARTIFACT_HEADER=$(curl -sLI -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/testorg-ghprovider/ghaction-test/actions/artifacts/$ARTIFACT_ID/zip | grep -Fi location:)
+            ARTIFACT_URL=$(echo $ARTIFACT_HEADER | cut -d' ' -f 2)
+
+            ROUNDROBIN_FILENAME=roundrobin.zip
+
+            # Use wget here to avoid url encoding issues with cURL
+            wget --header "Authorization: token $GITHUB_TOKEN" -O $ROUNDROBIN_FILENAME "$ARTIFACT_URL"
+
+            if [[ -f "$ROUNDROBIN_FILENAME" ]]; then
+              unzip -o $ROUNDROBIN_FILENAME
+            fi
+          fi            
 
       - uses: actions/upload-artifact@v2
         name: upload
