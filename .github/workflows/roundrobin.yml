@@ -24,7 +24,26 @@ jobs:
             if [[ -f "$ROUNDROBIN_FILENAME" ]]; then
               unzip -o $ROUNDROBIN_FILENAME
             fi
-          fi            
+          fi
+          
+          MAINTAINERS='["breathingdust"]'
+
+          LAST_PERSON=$(cat roundrobin)
+
+          LAST_PERSON_IDX=$(echo $MAINTAINERS | jq -r --arg LAST_PERSON "$LAST_PERSON" 'map(. == $LAST_PERSON) | index(true)')
+
+          NUM_REVIEWERS=$(echo $MAINTAINERS | jq '. | length')
+
+          NEXT_REVIEWER_INDEX=0
+
+          if [[ $LAST_PERSON_IDX -lt $((NUM_REVIEWERS-1)) ]]
+          then
+              NEXT_REVIEWER_INDEX=$(($LAST_PERSON_IDX+1))
+          fi
+
+          NEXT_REVIEWER=$(echo $MAINTAINERS | jq -r --arg INDEX $NEXT_REVIEWER_INDEX '.[$INDEX | tonumber]'
+
+          echo "Next Reviewer is: $NEXT_REVIEWER"          
 
       - uses: actions/upload-artifact@v2
         name: upload
