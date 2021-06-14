@@ -46,7 +46,9 @@ jobs:
             NEXT_REVIEWER=$(echo $MAINTAINERS | jq '.[0]')
           fi
 
-          echo "Next Reviewer is: $NEXT_REVIEWER"          
+          echo "Next Reviewer is: $NEXT_REVIEWER"
+          
+          echo $NEXT_REVIEWER > roundrobin
 
       - uses: actions/upload-artifact@v2
         name: upload
