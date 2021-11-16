@@ -11,5 +11,5 @@ jobs:
       if: github.event.issue.milestone.title == 'Roadmap'
       with:
         project: Test Project
-        column: To Do
+        column: To do
         repo-token: ${{ secrets.GH_TOKEN}}
