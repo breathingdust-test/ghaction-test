@@ -17,7 +17,7 @@ jobs:
         slack_token: 1
         slack_channel: 1
     - name: UploadArtifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: firewatch
         path: firewatch.data
