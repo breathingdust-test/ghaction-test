@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Firewatch
-      uses: breathingdust/firewatch@v2
+      uses: breathingdust/firewatch@cdcecd78d006dd89eaaf1524b3859efc6f821295
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         alert_threshold: 1
