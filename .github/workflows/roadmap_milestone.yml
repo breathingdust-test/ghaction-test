@@ -7,14 +7,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Move Roadmap Items To Working Board
-      uses: alex-page/github-project-automation-plus@v0.8.1
+      uses: alex-page/github-project-automation-plus@v0.8.3
       if:  github.event.action == 'milestoned' && github.event.issue.milestone.title == 'Roadmap'
       with:
         project: Test Project
         column: To do
         repo-token: ${{ secrets.GH_TOKEN}}
     - name: Remove Roadmap Items From Working Board
-      uses: alex-page/github-project-automation-plus@v0.8.1
+      uses: alex-page/github-project-automation-plus@v0.8.3
       if:  github.event.action == 'demilestoned' && github.event.issue.milestone.title == 'Roadmap'
       with:
         project: Test Project
