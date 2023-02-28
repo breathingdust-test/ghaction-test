@@ -18,7 +18,7 @@ jobs:
             Thanks again, and welcome to the community! :smiley:         
       - name: Add comment to newly raised pull requests
         if: github.event.action == 'opened'
-        uses: peter-evans/create-or-update-comment@v1
+        uses: peter-evans/create-or-update-comment@v2
         with:
           issue-number: ${{ github.event.pull_request.number }}
           body: |-
