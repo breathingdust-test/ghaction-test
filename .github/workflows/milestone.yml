@@ -18,7 +18,7 @@ jobs:
         run: |
           echo "milestone_id=$(curl -H "Authorization: Bearer ${{secrets.GITHUB_TOKEN}}" https://api.github.com/repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/milestones | jq 'map(select(.title == "${{ steps.get-current-milestone.outputs.current_milestone }}"))[0].number')" >> "$GITHUB_OUTPUT"
       - run: echo ${{ steps.get-milestone-id.outputs.milestone_id }}
-      - uses: breathingdust/current-milestone-action@v4
+      - uses: breathingdust/current-milestone-action@529d2a89c123fbe11c1b3906690d1f3416827fe1
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           pull_number: ${{ github.event.pull_request.number }}
