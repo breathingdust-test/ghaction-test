@@ -1,0 +1,28 @@
+name: "Regressions Slack Notifier"
+on:
+  pull_request:
+    types: [closed]
+jobs:
+  merged-notification:
+    if: ${{ github.event.pull_request.merged == true }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send custom JSON data to Slack workflow
+        id: slack
+        uses: slackapi/slack-github-action@v1
+        with:
+          payload: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": ":merged: <${{ github.event.pull_request.merged_by.url }}|${{ github.event.pull_request.merged_by.name }}> merged <${{ github.event.pull_request.url }}|${{ github.event.pull_request.title }}>"
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
