@@ -2,7 +2,7 @@ name: "Pull Request Slack Notifier"
 on:
   pull_request:
 env:
-  IN_MAINTAINER_LIST: true 
+  IN_MAINTAINER_LIST: 'true' 
 jobs:
   merged-notification:
     if: github.event.pull_request.merged == true
