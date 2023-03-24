@@ -28,12 +28,12 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
   maintainer-pullrequest:
-    if: github.event.pull_request.opened == true && env.IN_MAINTAINER_LIST == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Send custom JSON data to Slack workflow
         id: slack
         uses: slackapi/slack-github-action@v1
+        if: github.event.pull_request.opened == true && env.IN_MAINTAINER_LIST == 'true'        
         with:
           payload: |
             {
