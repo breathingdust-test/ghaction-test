@@ -1,6 +1,7 @@
 name: "Pull Request Slack Notifier"
 on:
   pull_request:
+   types: [opened, closed]
 env:
   IN_MAINTAINER_LIST: true
 jobs:
