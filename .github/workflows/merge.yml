@@ -1,10 +1,9 @@
-name: "Regressions Slack Notifier"
+name: "Pull Request Slack Notifier"
 on:
   pull_request:
-    types: [closed]
 jobs:
   merged-notification:
-    if: ${{ github.event.pull_request.merged == true }}
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - name: Send custom JSON data to Slack workflow
@@ -18,7 +17,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": ":merged: <${{ github.event.pull_request.merged_by.url }}|${{ github.event.pull_request.merged_by.login }}> merged <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}>"
+                    "text": ":merged: <${{ github.event.pull_request.merged_by.html_url }}|${{ github.event.pull_request.merged_by.login }}> merged <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}>"
                   }
                 }
               ]
@@ -26,3 +25,26 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+  maintainer-pullrequest:
+    if: github.event.pull_request.opened == true && env.IN_MAINTAINER_LIST == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send custom JSON data to Slack workflow
+        id: slack
+        uses: slackapi/slack-github-action@v1
+        with:
+          payload: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": ":open: <${{ github.event.pull_request.sender.html_url }}|${{ github.event.pull_request.sender.login }}> merged <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}>"
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK          
