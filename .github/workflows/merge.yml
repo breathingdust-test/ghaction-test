@@ -43,7 +43,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": ":open: <${{ github.event.pull_request.sender.html_url }}|${{ github.event.pull_request.sender.login }}> merged <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}>"
+                    "text": ":open: <${{ github.event.pull_request.user.html_url }}|${{ github.event.pull_request.user.login }}> merged <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}>"
                   }
                 }
               ]
