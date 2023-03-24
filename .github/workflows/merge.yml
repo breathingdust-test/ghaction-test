@@ -18,7 +18,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": ":merged: <${{ github.event.pull_request.merged_by.url }}|${{ github.event.pull_request.merged_by.login }}> merged <${{ github.event.pull_request.url }}|${{ github.event.pull_request.title }}>"
+                    "text": ":merged: <${{ github.event.pull_request.merged_by.url }}|${{ github.event.pull_request.merged_by.login }}> merged <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}>"
                   }
                 }
               ]
