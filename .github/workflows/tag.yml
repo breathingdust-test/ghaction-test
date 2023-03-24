@@ -1,0 +1,28 @@
+name: "New Tag Notifier"
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+*'
+jobs:
+  tag-created:
+    runs-on: ubuntu-latest
+    steps:
+      - name: new tag
+        id: slack
+        uses: slackapi/slack-github-action@v1
+        with:
+          payload: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": ":tag: <https://github.com/${{ github.event.pusher.username }}|${{ github.event.pusher.username }}> pushed tag <https://github.com/hashicorp/terraform-provider-aws/tree/${{ github.event.ref }}|${{ github.event.ref }}>"
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
