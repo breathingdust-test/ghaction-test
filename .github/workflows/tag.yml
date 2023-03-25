@@ -7,6 +7,9 @@ jobs:
   tag-created:
     runs-on: ubuntu-latest
     steps:
+      - name: Dump GitHub context
+        run: |
+          echo "${{ toJson(github.event) }}"
       - name: new tag
         id: slack
         uses: slackapi/slack-github-action@v1
