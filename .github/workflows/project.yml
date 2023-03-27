@@ -17,6 +17,8 @@ jobs:
         run: |
           PR_NAME=$(gh pr view ${{ github.event.project_card.content_url }} --json title | jq .title)
           echo "PR_NAME=$PR_NAME" >> $GITHUB_OUTPUT
+          echo $PR_NAME
+          echo $(gh pr view ${{ github.event.project_card.content_url }} --json title | jq .title)
       - name: Feed Message
         if: github.event.project_card.column_id == env.HC_REVIEW_COLUMN_ID
         id: slack
