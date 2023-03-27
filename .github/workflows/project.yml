@@ -54,4 +54,6 @@ jobs:
           -H "Accept: application/vnd.github+json" \
           -H "X-GitHub-Api-Version: 2022-11-28" \
           /projects/columns/${{ env.WORKING_BOARD_COLUMN_ID }}/cards \
-          -f content_id=${{ steps.get-name.outputs.PR_ID }}
+          -f content_id=${{ steps.get-name.outputs.PR_ID }} \
+          -f content_type=PullRequest
+  
