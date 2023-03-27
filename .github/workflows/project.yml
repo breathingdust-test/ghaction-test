@@ -20,9 +20,9 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             ${{ github.event.project_card.content_url }} )
-          PR_NAME=$(echo $PR | jq .html_url | tr -d '"')
+          PR_NAME=$(echo $PR | jq .title | tr -d '"')
           HTML_URL=$(echo $PR | jq .html_url | tr -d '"')
-          PR_ID=$(echo $PR | jq .html_url | tr -d '"')
+          PR_ID=$(echo $PR | jq .number | tr -d '"')
           echo "PR_ID=$PR_ID" >> $GITHUB_OUTPUT
           echo "PR_NAME=$PR_NAME" >> $GITHUB_OUTPUT
           echo "HTML_URL=$HTML_URL" >> $GITHUB_OUTPUT
