@@ -6,7 +6,7 @@ env:
   WORKING_BOARD_COLUMN_ID: 19410840
 jobs:
   AWSContributionReady:
-    if: github.event.column_id == ${{ env.HC_REVIEW_COLUMN_ID}}
+    if: github.event.column_id == env.HC_REVIEW_COLUMN_ID
     runs-on: ubuntu-latest
     steps:
       - name: Get PullRequest name
