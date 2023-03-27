@@ -40,7 +40,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "AWS :aws-cool: Contribution: <${{ steps.get-name.outputs.HTML_URL }}|${{ steps.get-name.outputs.PR_NAME }}> has been marked as ready for HashiCorp review."
+                    "text": ":aws-cool: AWS Contribution: <${{ steps.get-name.outputs.HTML_URL }}|${{ steps.get-name.outputs.PR_NAME }}> has been marked as ready for HashiCorp review."
                   }
                 }
               ]
