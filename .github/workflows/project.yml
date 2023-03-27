@@ -8,6 +8,9 @@ jobs:
   AWSContributionReady:
     runs-on: ubuntu-latest
     steps:
+      - name: Echo
+        run: |
+          echo "${{ env.HC_REVIEW_COLUMN_ID }} ${{ github.event.column_id }}"
       - name: Get PullRequest name
         if: github.event.column_id == env.HC_REVIEW_COLUMN_ID
         run: |
