@@ -12,10 +12,11 @@ jobs:
         run: |
           echo "${{ env.HC_REVIEW_COLUMN_ID }} ${{ toJson(github.event) }}"
       - name: Get PullRequest name
+        id: get-name
         if: github.event.project_card.column_id == env.HC_REVIEW_COLUMN_ID
         run: |
           PR_NAME=$(gh pr view ${{ github.event.project_card.content_url }} --json title | jq .title)
-          echo "PR_NAME=$PR_NAME" >> $GITHUB_ENV
+          echo "PR_NAME=$PR_NAME" >> $GITHUB_OUTPUT
       - name: Feed Message
         if: github.event.project_card.column_id == env.HC_REVIEW_COLUMN_ID
         id: slack
@@ -28,7 +29,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "AWS :aws-cool: Contribution: <${{ github.event.project_card.content_url }}|${{ env.PR_NAME }}> has been marked as ready for HashiCorp review."
+                    "text": "AWS :aws-cool: Contribution: <${{ github.event.project_card.content_url }}|${{ steps.get-name.outputs.PR_NAME }}> has been marked as ready for HashiCorp review."
                   }
                 }
               ]
@@ -36,7 +37,6 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
-          PR_NAME: ${{ env.PR_NAME }}
       - name: AddToWorkingBoard
         if: github.event.project_card.column_id == env.HC_REVIEW_COLUMN_ID
         run: |
