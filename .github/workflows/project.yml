@@ -28,7 +28,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "AWS Contribution :tag: <https://github.com/${{ github.event.project_card.content_url }}|${{ env.PR_NAME }}> has been marked as ready for HashiCorp review."
+                    "text": "AWS :aws-cool: Contribution: <${{ github.event.project_card.content_url }}|${{ env.PR_NAME }}> has been marked as ready for HashiCorp review."
                   }
                 }
               ]
