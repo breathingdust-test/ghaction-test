@@ -4,6 +4,7 @@ on:
 env:
   HC_REVIEW_COLUMN_ID: '11197351'
   WORKING_BOARD_COLUMN_ID: '19410840'
+  GH_TOKEN: ${{ github.token }}
 jobs:
   AWSContributionReady:
     runs-on: ubuntu-latest
@@ -48,5 +49,3 @@ jobs:
           -H "X-GitHub-Api-Version: 2022-11-28" \
           /projects/columns/${{ env.WORKING_BOARD_COLUMN_ID }}/cards \
           -f content_url='${{ github.event.project_card.content_url }}'
-        env:
-          GH_TOKEN: ${{ github.token }}
