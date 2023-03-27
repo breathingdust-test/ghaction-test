@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Echo
         run: |
-          echo "${{ env.HC_REVIEW_COLUMN_ID }} ${{ github.event }}"
+          echo "${{ env.HC_REVIEW_COLUMN_ID }} ${{ toJson(github.event) }}"
       - name: Get PullRequest name
         if: github.event.column_id == env.HC_REVIEW_COLUMN_ID
         run: |
