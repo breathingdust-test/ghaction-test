@@ -2,8 +2,8 @@ on:
   project_card:
     types: [moved]
 env:
-  HC_REVIEW_COLUMN_ID: 11197351
-  WORKING_BOARD_COLUMN_ID: 19410840
+  HC_REVIEW_COLUMN_ID: '11197351'
+  WORKING_BOARD_COLUMN_ID: '19410840'
 jobs:
   AWSContributionReady:
     runs-on: ubuntu-latest
