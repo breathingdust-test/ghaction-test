@@ -12,12 +12,12 @@ jobs:
         run: |
           echo "${{ env.HC_REVIEW_COLUMN_ID }} ${{ toJson(github.event) }}"
       - name: Get PullRequest name
-        if: github.event.column_id == env.HC_REVIEW_COLUMN_ID
+        if: github.event.project_card.column_id == env.HC_REVIEW_COLUMN_ID
         run: |
           PR_NAME=$(gh pr view ${{ github.event.project_card.content_url }} --json title | jq .title)
           echo "PR_NAME=$PR_NAME" >> $GITHUB_ENV
       - name: Feed Message
-        if: github.event.column_id == env.HC_REVIEW_COLUMN_ID
+        if: github.event.project_card.column_id == env.HC_REVIEW_COLUMN_ID
         id: slack
         uses: slackapi/slack-github-action@v1
         with:
@@ -38,7 +38,7 @@ jobs:
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
           PR_NAME: ${{ env.PR_NAME }}
       - name: AddToWorkingBoard
-        if: github.event.column_id == env.HC_REVIEW_COLUMN_ID
+        if: github.event.project_card.column_id == env.HC_REVIEW_COLUMN_ID
         run: |
           gh api \
           --method POST \
