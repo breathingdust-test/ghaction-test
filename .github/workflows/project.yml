@@ -6,14 +6,15 @@ env:
   WORKING_BOARD_COLUMN_ID: 19410840
 jobs:
   AWSContributionReady:
-    if: github.event.column_id == env.HC_REVIEW_COLUMN_ID
     runs-on: ubuntu-latest
     steps:
       - name: Get PullRequest name
+        if: github.event.column_id == env.HC_REVIEW_COLUMN_ID
         run: |
           PR_NAME=$(gh pr view ${{ github.event.project_card.content_url }} --json title | jq .title)
           echo "PR_NAME=$PR_NAME" >> $GITHUB_ENV
       - name: Feed Message
+        if: github.event.column_id == env.HC_REVIEW_COLUMN_ID
         id: slack
         uses: slackapi/slack-github-action@v1
         with:
