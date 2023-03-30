@@ -20,7 +20,7 @@ jobs:
           PR=$(gh api graphql -f query='
           query {
               repository(name: "ghaction-test", owner: "breathingdust-test") {
-                  issue(number: 161) {
+                  issue(number: $PR_ID) {
                   number
                   id
                   title
@@ -55,9 +55,27 @@ jobs:
       - name: AddToWorkingBoard
         if: github.event.project_card.column_id == env.HC_REVIEW_COLUMN_ID
         run: |
-          gh api graphql -f query='mutation MyMutation {
-            addProjectCard(input: {projectColumnId: "PC_lATOEELF384AWDb-zgEoL5g", contentId: "${{ steps.get-name.outputs.PR_NODE_ID }}"}) {
-              clientMutationId
-            }
-          }'
-  
+          COLUMNS=$(gh api graphql -f query='
+              query {
+                repository(name: "ghaction-test", owner: "breathingdust-test") {
+                issue(id: ${{ steps.get-name.outputs.PR_NODE_ID }}) {
+                  projectCards {
+                    nodes {
+                      column {
+                        name
+                        id
+                      }
+                    }
+                  }
+                }
+              }
+            }')
+            
+          if ${echo $COLUMNS | jq -e '.data.repository.issue.projectCards.nodes[].column | select(.id=="${{ env.WORKING_BOARD_COLUMN_ID }}")'} 
+            gh api graphql -f query='mutation MyMutation {
+              addProjectCard(input: {projectColumnId: "${{ env.WORKING_BOARD_COLUMN_ID }}", contentId: "${{ steps.get-name.outputs.PR_NODE_ID }}"}) {
+                clientMutationId
+              }
+            }'          
+          fi
+          
