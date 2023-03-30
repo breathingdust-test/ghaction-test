@@ -20,7 +20,7 @@ jobs:
           PR=$(gh api graphql -f query='
           query {
               repository(name: "ghaction-test", owner: "breathingdust-test") {
-                  issue(number: $PR_ID) {
+                  issue(number: "${{ env.PR_ID }}") {
                   number
                   id
                   title
