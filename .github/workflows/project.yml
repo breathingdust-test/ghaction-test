@@ -9,14 +9,14 @@ jobs:
   AWSContributionReady:
     runs-on: ubuntu-latest
     steps:
-      - name: Echo
+      - name: Get PR ID
         run: |
-          echo "${{ env.HC_REVIEW_COLUMN_ID }} ${{ toJson(github.event) }}"
+          PR_ID=$(basename ${{ github.event.project_card.content_url }})
+          echo "PR_ID=$PR_ID" >> $GITHUB_ENV
       - name: Get PullRequest name
         id: get-name
         if: github.event.project_card.column_id == env.HC_REVIEW_COLUMN_ID
         run: |
-          PR_ID=$(basename ${{ github.event.project_card.content_url }})
           PR=$(gh api graphql -f query='
           query {
               repository(name: "ghaction-test", owner: "breathingdust-test") {
