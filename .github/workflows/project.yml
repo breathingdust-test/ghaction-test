@@ -56,7 +56,7 @@ jobs:
         if: github.event.project_card.column_id == env.HC_REVIEW_COLUMN_ID
         run: |
           gh api graphql -f query='mutation MyMutation {
-            addProjectCard(input: {projectColumnId: "PC_lATOEELF384AWDb-zgEoL5g", contentId: "$PR_NODE_ID"}) {
+            addProjectCard(input: {projectColumnId: "PC_lATOEELF384AWDb-zgEoL5g", contentId: ${{ steps.get-name.outputs.PR_NODE_ID }}}) {
               clientMutationId
             }
           }'
