@@ -71,7 +71,7 @@ jobs:
               }
             }')
             
-          if $(echo $COLUMNS | jq -e '.data.repository.issue.projectCards.nodes[].column | select(.id=="${{ env.WORKING_BOARD_COLUMN_ID }}")') 
+          if ! $(echo $COLUMNS | jq -e '.data.repository.issue.projectCards.nodes[].column | select(.id=="${{ env.WORKING_BOARD_COLUMN_ID }}")') 
           then
             gh api graphql -f query='mutation {
               addProjectCard(input: {projectColumnId: "${{ env.WORKING_BOARD_COLUMN_ID }}", contentId: "${{ steps.get-name.outputs.PR_NODE_ID }}"}) {
