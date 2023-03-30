@@ -58,7 +58,7 @@ jobs:
           COLUMNS=$(gh api graphql -f query='
               query {
                 repository(name: "ghaction-test", owner: "breathingdust-test") {
-                issue(id: "${{ steps.get-name.outputs.PR_NODE_ID }}") {
+                  issue(number: ${{ env.PR_ID }}) {
                   projectCards {
                     nodes {
                       column {
