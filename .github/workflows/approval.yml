@@ -1,0 +1,27 @@
+on:
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  approved:
+    if: github.event.review.state == 'approved'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notification PR Approval
+        uses: slackapi/slack-github-action@007b2c3c751a190b6f0f040e47ed024deaa72844
+        with:
+          payload: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": ":approved-pr: <${{ github.event.review.user.html_url }}|${{ github.event.review.user.login }}> approved <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}>"
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
