@@ -9,6 +9,13 @@ on:
         value: ${{ jobs.community_check.outputs.is_maintainer }}
       partner:
         value: ${{ jobs.community_check.outputs.is_partner }}
+    secrets:
+      CORE_CONTRIBUTORS:
+        required: true
+      MAINTAINERS:
+        required: true
+      PARTNERS:
+        required: true        
 
 jobs:
   community_check:
