@@ -6,7 +6,7 @@ jobs:
   community_check:
     uses: ./.github/workflows/community-check.yml
     secrets: inherit
-  Test:
+  TestAll:
     needs: community_check
     runs-on: ubuntu-latest
     steps:
@@ -16,3 +16,35 @@ jobs:
       - name: Notification PR Merged
         run: |
           echo ${{ needs.community_check.outputs.maintainer }}
+  TestMaintainer:
+    needs: community_check
+    runs-on: ubuntu-latest
+    if: (github.event.action == 'opened' && needs.community_check.outputs.maintainer)
+    steps:
+      - name: Notification PR Merged
+        run: |
+          echo ${{ needs.community_check.outputs.maintainer }}     
+  TestMaintainerTwo:
+    needs: community_check
+    runs-on: ubuntu-latest
+    if: github.event.action == 'opened' && needs.community_check.outputs.maintainer
+    steps:
+      - name: Notification PR Merged
+        run: |
+          echo ${{ needs.community_check.outputs.maintainer }}            
+  TestPartner:
+    needs: community_check
+    runs-on: ubuntu-latest
+    if: (github.event.action == 'opened' && needs.community_check.outputs.maintainer)
+    steps:
+      - name: Notification PR Merged
+        run: |
+          echo ${{ needs.community_check.outputs.partner }}     
+  TestPartnerTwo:
+    needs: community_check
+    runs-on: ubuntu-latest
+    if: github.event.action == 'opened' && needs.community_check.outputs.maintainer
+    steps:
+      - name: Notification PR Merged
+        run: |
+          echo ${{ needs.community_check.outputs.partner }}     
