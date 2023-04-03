@@ -1,7 +1,7 @@
 name: "List Check"
 on:
   pull_request:
-   types: assigned, opened, synchronize, reopened
+   types: [assigned, opened, synchronize, reopened]
 jobs:
   community_check:
     uses: ./.github/workflows/community-check.yml
