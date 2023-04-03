@@ -6,13 +6,3 @@ sdfsd
 k
 k
 dsf
-dfd
-df
-xcxdd 
-d
- 
- 
- 
- 
- 
-sdfsdfsdf
