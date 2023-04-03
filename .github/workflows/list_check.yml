@@ -43,7 +43,7 @@ jobs:
   TestPartnerTwo:
     needs: community_check
     runs-on: ubuntu-latest
-    if: ${{ github.event.action == 'opened' && needs.community_check.outputs.partner == 'true' }}
+    if: ${{ github.event.action == 'opened' && needs.community_check.outputs.partner == 'false' }}
     steps:
       - name: Notification PR Merged
         run: |
