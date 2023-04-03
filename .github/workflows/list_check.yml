@@ -1,0 +1,17 @@
+name: "List Check"
+on:
+  pull_request:
+   types: [opened, closed]
+jobs:
+  community_check:
+    uses: ./.github/workflows/community-check.yml
+    secrets: inherit
+  NotificationPRMerged:
+    needs: community_check
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notification PR Merged
+        if: needs.community_check.outputs.maintainer
+        run: |
+          echo ${{ needs.community_check.outputs.maintainer }}
