@@ -10,6 +10,9 @@ jobs:
     needs: community_check
     runs-on: ubuntu-latest
     steps:
+      - name: Stuff
+        run: |
+          echo main  
       - name: Notification PR Merged
         run: |
           echo ${{ needs.community_check.outputs.maintainer }}
