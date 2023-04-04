@@ -30,6 +30,13 @@ jobs:
           filters: |
             changed:
               - CHANGELOG.md
+  changesvalue:
+    needs: changes
+    name: anecho
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo ${{ needs.changes.outputs.changed }}
 
   comment:
     needs: changes
