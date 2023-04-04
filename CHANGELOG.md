@@ -8,7 +8,7 @@ BREAKING CHANGES:
 
 NOTES:
 
-* This is a note ([#96](https://github.com/hashicorp/terraform-provider-aws/issues/96))
+* This is a note ([#96](https://github.com/hashicorp/terraform-provider-aws/issues/96)) 
 
 FEATURES:
 
@@ -18,7 +18,7 @@ FEATURES:
 * **New Resource:** `This is a new-resource` ([#96](https://github.com/hashicorp/terraform-provider-aws/issues/96))
 * **New Resource:** ``google_app_engine_service_split_traffic`` ([#45](https://github.com/hashicorp/terraform-provider-aws/issues/45))
 * **New Resource:** ``new thingy`` ([#65](https://github.com/hashicorp/terraform-provider-aws/issues/65))
-* **New Resource:** `aws_sagemaker_app_image_config` ([#3](https://github.com/hashicorp/terraform-provider-aws/issues/3))
+* **New Resource:** `aws_sagemaker_app_image_config` ([#3](https://github.com/hashicorp/terraform-provider-aws/issues/3)) 
 
 ENHANCEMENTS:
 
