@@ -32,7 +32,7 @@ jobs:
     steps:
       - name: Notification Maintainer PR Opened
         uses: slackapi/slack-github-action@007b2c3c751a190b6f0f040e47ed024deaa72844
-        if: github.event.action == 'opened' && env.IN_MAINTAINER_LIST == 'true' 
+        if: github.event.action == 'opened' && env.IN_MAINTAINER_LIST == 'true' && github.actor != 'dependabot[bot]'
         with:
           payload: |
             {
