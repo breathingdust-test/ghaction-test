@@ -16,7 +16,7 @@ jobs:
     steps:  
      - name: AddToWorkingBoard
        run: |
-          COLUMNS=$(gh api graphql -f query='
+          $PROJCOLUMNS=$(gh api graphql -f query='
               query {
                 repository(name: "${{ github.event.repository.name }}", owner: "${{ github.repository_owner }}") {
                   issue(number: ${{ github.event.issue.number }}) {
@@ -31,13 +31,12 @@ jobs:
                 }
               }
             }')
-            
-          if ! $(echo $COLUMNS | jq -e '.data.repository.issue.projectCards.nodes[].column | select(.id=="${{ env.WORKING_BOARD_COLUMN_ID }}")') 
+          INPROJECT=$(echo $PROJCOLUMNS | jq '.data.repository.issue.projectCards.nodes[].column | select(.id=="${{ env.DESTINATION_COLUMN_ID }}")')            
+          if [ -z "$INPROJECT" ]; 
           then
             gh api graphql -f query='mutation {
-              addProjectCard(input: {projectColumnId: "${{ env.WORKING_BOARD_COLUMN_ID }}", contentId: "${{ github.event.issue.node_id }}"}) {
+              addProjectCard(input: {projectColumnId: "${{ env.DESTINATION_COLUMN_ID }}", contentId: "${{ github.event.issue.node_id }}"}) {
                 clientMutationId
               }
             }'
           fi
-        
