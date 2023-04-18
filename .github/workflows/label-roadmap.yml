@@ -13,34 +13,13 @@ jobs:
   tag-created:
     if: ${{ github.event.label.name == 'roadmap' }}
     runs-on: ubuntu-latest
-    steps:
-     - name: test
-       run: |
-          echo ${{ github.event.issue.number }} ${{ github.event.issue.id }} ${{ github.event.issue.node_id }}
-     - name: Get PR Node ID
-       id: get-id
-       run: |
-          PR=$(gh api graphql -f query='
-          query {
-              repository(name: "${{ github.event.repository.name }}", owner: "${{ github.repository_owner }}") {
-                  issue(number: ${{ github.event.issue.number }}) {
-                  number
-                  id
-                  title
-                  url
-                  }
-              }
-          }')
-          read PR_NAME HTML_URL PR_NODE_ID < <(echo $PR | jq -r '.data.repository.issue| "\(.title) \(.url) \(.id)"')
-          echo "PR_NODE_ID=$PR_NODE_ID" >> $GITHUB_OUTPUT
-          echo "PR_NAME=$PR_NAME" >> $GITHUB_OUTPUT
-          echo "HTML_URL=$HTML_URL" >> $GITHUB_OUTPUT    
+    steps:  
      - name: AddToWorkingBoard
        run: |
           COLUMNS=$(gh api graphql -f query='
               query {
                 repository(name: "${{ github.event.repository.name }}", owner: "${{ github.repository_owner }}") {
-                  issue(number: ${{ github.event.issue.id }}) {
+                  issue(number: ${{ github.event.issue.number }}) {
                   projectCards {
                     nodes {
                       column {
@@ -56,7 +35,7 @@ jobs:
           if ! $(echo $COLUMNS | jq -e '.data.repository.issue.projectCards.nodes[].column | select(.id=="${{ env.WORKING_BOARD_COLUMN_ID }}")') 
           then
             gh api graphql -f query='mutation {
-              addProjectCard(input: {projectColumnId: "${{ env.WORKING_BOARD_COLUMN_ID }}", contentId: "${{ steps.get-id.outputs.PR_NODE_ID }}"}) {
+              addProjectCard(input: {projectColumnId: "${{ env.WORKING_BOARD_COLUMN_ID }}", contentId: "${{ github.event.issue.node_id }}"}) {
                 clientMutationId
               }
             }'
