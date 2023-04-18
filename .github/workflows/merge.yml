@@ -46,6 +46,12 @@ jobs:
                 }
               ]
             }
+      - name: Apply Partner Label
+        if: github.event.action == 'opened'
+        run: |
+          gh api repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/issues/${{ github.event.pull_request.number }}/labels \
+          -d '{"labels":["partner"]}'
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK          
+          SLACK_WEBHOOK_URL: ${{ secrets.FEED_SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+          GH_TOKEN: ${{ github.token }}      
