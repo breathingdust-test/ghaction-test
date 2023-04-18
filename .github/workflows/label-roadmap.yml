@@ -7,7 +7,7 @@ on:
     types:
       - labeled
 env:
-  WORKING_BOARD_COLUMN_ID: 'PC_lATOEELF384AWDb-zgEoL5g'
+  DESTINATION_COLUMN_ID: 'PC_lATOEELF384AWDb-zgEoL5g'
   GH_TOKEN: ${{ github.token }}      
 jobs:
   tag-created:
