@@ -15,8 +15,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
      - name: Get PR Node ID
-        id: GetNodeId
-        run: |
+       id: get-id
+       run: |
           PR=$(gh api graphql -f query='
           query {
               repository(name: "${{ github.event.repository.name }}", owner: "${{ github.event.organization.name }}") {
@@ -32,8 +32,8 @@ jobs:
           echo "PR_NODE_ID=$PR_NODE_ID" >> $GITHUB_OUTPUT
           echo "PR_NAME=$PR_NAME" >> $GITHUB_OUTPUT
           echo "HTML_URL=$HTML_URL" >> $GITHUB_OUTPUT    
-      - name: AddToWorkingBoard
-        run: |
+     - name: AddToWorkingBoard
+       run: |
           COLUMNS=$(gh api graphql -f query='
               query {
                 repository(name: "${{ github.event.repository.name }}", owner: "${{ github.event.organization.name }}") {
@@ -53,7 +53,7 @@ jobs:
           if ! $(echo $COLUMNS | jq -e '.data.repository.issue.projectCards.nodes[].column | select(.id=="${{ env.WORKING_BOARD_COLUMN_ID }}")') 
           then
             gh api graphql -f query='mutation {
-              addProjectCard(input: {projectColumnId: "${{ env.WORKING_BOARD_COLUMN_ID }}", contentId: "${{ steps.get-name.outputs.PR_NODE_ID }}"}) {
+              addProjectCard(input: {projectColumnId: "${{ env.WORKING_BOARD_COLUMN_ID }}", contentId: "${{ steps.get-id.outputs.PR_NODE_ID }}"}) {
                 clientMutationId
               }
             }'
