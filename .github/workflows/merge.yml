@@ -4,6 +4,9 @@ on:
    types: [opened, closed]
 env:
   IN_MAINTAINER_LIST: true
+  SLACK_WEBHOOK_URL: ${{ secrets.FEED_SLACK_WEBHOOK_URL }}
+  SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+  GH_TOKEN: ${{ github.token }}       
 jobs:
   NotificationPRMerged:
     if: github.event.pull_request.merged == true
@@ -51,7 +54,4 @@ jobs:
         run: |
           gh api repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/issues/${{ github.event.pull_request.number }}/labels \
           -d '{"labels":["partner"]}'
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.FEED_SLACK_WEBHOOK_URL }}
-          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
-          GH_TOKEN: ${{ github.token }}      
+ 
