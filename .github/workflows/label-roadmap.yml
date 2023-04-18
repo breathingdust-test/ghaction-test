@@ -19,7 +19,7 @@ jobs:
        run: |
           PR=$(gh api graphql -f query='
           query {
-              repository(name: "${{ github.event.repository.name }}", owner: "${{ github.event.organization.name }}") {
+              repository(name: "${{ github.repository.name }}", owner: "${{ github.organization.name }}") {
                   issue(number: ${{ github.event.issue.id }}) {
                   number
                   id
