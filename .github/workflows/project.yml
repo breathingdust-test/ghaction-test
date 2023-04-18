@@ -8,13 +8,13 @@ env:
 jobs:
   PartnerContributionReady:
     runs-on: ubuntu-latest
-    if: github.event.project_card.column_id == env.HC_REVIEW_COLUMN_ID
     steps:
       - name: Get PR ID
         run: |
           PR_ID=$(basename ${{ github.event.project_card.content_url }})
           echo "PR_ID=$PR_ID" >> $GITHUB_ENV
       - name: Get PullRequest Details
+        if: github.event.project_card.column_id == env.HC_REVIEW_COLUMN_ID
         id: get-details
         run: |
           PR=$(gh api graphql -f query='
