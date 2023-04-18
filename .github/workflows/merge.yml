@@ -53,5 +53,5 @@ jobs:
         if: github.event.action == 'opened'
         run: |
           gh api repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/issues/${{ github.event.pull_request.number }}/labels \
-          -d '{"labels":["partner"]}'
+          -f "labels[]=bug"
  
