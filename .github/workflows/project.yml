@@ -56,7 +56,7 @@ jobs:
       - name: AddToWorkingBoard
         if: github.event.project_card.column_id == env.HC_REVIEW_COLUMN_ID
         run: |
-          COLUMNS=$(gh api graphql -f query='
+          PROJCOLUMNS=$(gh api graphql -f query='
               query {
                 repository(name: "${{ github.event.repository.name }}", owner: "${{ github.repository_owner }}") {
                   issue(number: ${{ env.PR_ID }}) {
@@ -72,7 +72,7 @@ jobs:
               }
             }')
             
-          if ! $(echo $COLUMNS | jq -e '.data.repository.issue.projectCards.nodes[].column | select(.id=="${{ env.WORKING_BOARD_COLUMN_ID }}")') 
+          if ! $(echo $PROJCOLUMNS | jq -e '.data.repository.issue.projectCards.nodes[].column | select(.id=="${{ env.WORKING_BOARD_COLUMN_ID }}")') 
           then
             gh api graphql -f query='mutation {
               addProjectCard(input: {projectColumnId: "${{ env.WORKING_BOARD_COLUMN_ID }}", contentId: "${{ steps.get-details.outputs.PR_NODE_ID }}"}) {
