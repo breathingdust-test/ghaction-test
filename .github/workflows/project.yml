@@ -71,6 +71,3 @@ jobs:
                 }
               }
             }')
-          INPROJECT=$(echo $PROJCOLUMNS | jq -e '.data.repository.issue.projectCards.nodes[].column | select(.id=="${{ env.WORKING_BOARD_COLUMN_ID }}")')  
-
-          
