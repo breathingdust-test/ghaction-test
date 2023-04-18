@@ -1,0 +1,61 @@
+name: "Project: Roadmap"
+on:
+  issues:
+    types:
+      - labeled
+  pull_request:
+    types:
+      - labeled
+env:
+  WORKING_BOARD_COLUMN_ID: 'PC_lATOEELF384AWDb-zgEoL5g'
+  GH_TOKEN: ${{ github.token }}      
+jobs:
+  tag-created:
+    if: ${{ github.event.label.name == 'roadmap' }}
+    runs-on: ubuntu-latest
+    steps:
+     - name: Get PR Node ID
+        id: GetNodeId
+        run: |
+          PR=$(gh api graphql -f query='
+          query {
+              repository(name: "${{ github.event.repository.name }}", owner: "${{ github.event.organization.name }}") {
+                  issue(number: ${{ github.event.issue.id }}) {
+                  number
+                  id
+                  title
+                  url
+                  }
+              }
+          }')
+          read PR_NAME HTML_URL PR_NODE_ID < <(echo $PR | jq -r '.data.repository.issue| "\(.title) \(.url) \(.id)"')
+          echo "PR_NODE_ID=$PR_NODE_ID" >> $GITHUB_OUTPUT
+          echo "PR_NAME=$PR_NAME" >> $GITHUB_OUTPUT
+          echo "HTML_URL=$HTML_URL" >> $GITHUB_OUTPUT    
+      - name: AddToWorkingBoard
+        run: |
+          COLUMNS=$(gh api graphql -f query='
+              query {
+                repository(name: "${{ github.event.repository.name }}", owner: "${{ github.event.organization.name }}") {
+                  issue(number: ${{ github.event.issue.id }}) {
+                  projectCards {
+                    nodes {
+                      column {
+                        name
+                        id
+                      }
+                    }
+                  }
+                }
+              }
+            }')
+            
+          if ! $(echo $COLUMNS | jq -e '.data.repository.issue.projectCards.nodes[].column | select(.id=="${{ env.WORKING_BOARD_COLUMN_ID }}")') 
+          then
+            gh api graphql -f query='mutation {
+              addProjectCard(input: {projectColumnId: "${{ env.WORKING_BOARD_COLUMN_ID }}", contentId: "${{ steps.get-name.outputs.PR_NODE_ID }}"}) {
+                clientMutationId
+              }
+            }'
+          fi
+        
