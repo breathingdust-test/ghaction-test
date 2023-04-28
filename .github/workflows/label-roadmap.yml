@@ -32,7 +32,7 @@ jobs:
           if [ -z "$INPROJECT" ];
           then
             gh api graphql -f query='mutation {
-              addProjectCard(input: {projectColumnId: "${{ env.DESTINATION_COLUMN_ID }}", contentId: "${{ github.event.issue.node_id }}"}) {
+              addProjectCard(input: {projectColumnId: "${{ env.DESTINATION_COLUMN_ID }}", contentId: "${{ github.event.pullRequest.node_id }}"}) {
                 clientMutationId
               }
             }'
