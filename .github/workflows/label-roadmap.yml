@@ -8,7 +8,7 @@ env:
   GH_TOKEN: ${{ github.token }}      
 jobs:
   tag-created:
-    if: ${{ github.event.label.name == 'partner' }}
+    if: ${{ github.event.label.name == 'roadmap' }}
     runs-on: ubuntu-latest
     steps:
       - name: AddIssueToPartnerBoard
