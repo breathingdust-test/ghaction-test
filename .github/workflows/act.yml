@@ -1,0 +1,8 @@
+on:
+  - pull_request_target
+jobs:
+  checker:
+    runs-on: ubuntu-latest
+    name: Test changed-files
+    steps:
+      - run: echo ${{ toJson(github) }}
