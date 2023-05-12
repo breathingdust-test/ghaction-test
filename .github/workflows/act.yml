@@ -8,6 +8,7 @@ jobs:
       - run:
           sudo apt-get install ripgrep
       - name: doc-extension-check
+        shell: bash {0}
         run: |
           MDFILES=$(curl -sL ${{ github.event.pull_request.patch_url }} | rg -U '^ create mode \d* website/.*/\w*.markdown\n')
 
