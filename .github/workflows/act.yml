@@ -5,14 +5,14 @@ jobs:
     runs-on: ubuntu-latest
     name: Test changed-files
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Get changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v35
-      - name: List all added files
+      - run:
+          sudo apt-get install ripgrep
+      - name: doc-extension-check
         run: |
-          for file in ${{ steps.changed-files.outputs.added_files }}; do
-            echo "$file was added"
-          done
+          MDFILES=$(curl -s ${{ github.event.pull_request.patch_url }} | rg -U '^ create mode \d* website/.*/\w*.markdown\n')
+
+          if [ -n "$MDFILES" ]
+          then
+            echo "Documentation files must have the extension *.html.markdown"           
+            exit 1
+          fi
