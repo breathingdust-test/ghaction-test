@@ -8,7 +8,7 @@ jobs:
       - name: doc-extension-check
         shell: bash {0}
         run: |
-          MDFILES=$(curl -sL ${{ github.event.pull_request.patch_url }} | grep -P '^ create mode \d* website\/.*\/\w*\.markdown'
+          MDFILES=$(curl -sL ${{ github.event.pull_request.patch_url }} | grep -P '^ create mode \d* website\/.*\/\w*\.markdown')
 
           if [ -n "$MDFILES" ]
           then
