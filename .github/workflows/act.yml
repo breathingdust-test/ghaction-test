@@ -1,9 +1,8 @@
 on:
   - pull_request_target
 jobs:
-  doc-file-extn-check:
+  doc-extension-check:
     runs-on: ubuntu-latest
-    name: Thing
     steps:
       - name: doc-extension-check
         shell: bash {0}
