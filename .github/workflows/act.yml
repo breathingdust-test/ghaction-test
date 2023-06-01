@@ -1,16 +1,14 @@
 on:
   - pull_request_target
 jobs:
-  checker:
+  doc-file-extn-check:
     runs-on: ubuntu-latest
-    name: Test changed-files
+    name: Thing
     steps:
-      - run:
-          sudo apt-get install ripgrep
       - name: doc-extension-check
         shell: bash {0}
         run: |
-          MDFILES=$(curl -sL ${{ github.event.pull_request.patch_url }} | rg -U '^ create mode \d* website/.*/\w*.markdown\n')
+          MDFILES=$(curl -sL ${{ github.event.pull_request.patch_url }} | grep -P '^ create mode \d* website\/.*\/\w*\.markdown'
 
           if [ -n "$MDFILES" ]
           then
