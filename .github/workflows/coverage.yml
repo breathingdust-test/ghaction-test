@@ -13,7 +13,7 @@ jobs:
       - run: git config --global user.email "github-team-terraform-aws@hashicorp.com"
       - run: git config --global user.name "team-tf-aws"
       - run: go install github.com/breathingdust/duvet@main
-      - run: git checkout https://github.com/hashicorp/terraform-provider-aws.git
+      - run: git clone https://github.com/hashicorp/terraform-provider-aws.git
       - run: |
           cd terraform-provider-aws
           duvet service -f markdown -d docs -p ../terraform-provider-aws
