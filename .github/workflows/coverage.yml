@@ -12,9 +12,8 @@ jobs:
       - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
       - run: git config --global user.email "github-team-terraform-aws@hashicorp.com"
       - run: git config --global user.name "team-tf-aws"
-      - name: Run conversion
-        run: |
-          go install github.com/breathingdust/duvet@main
-          git checkout https://github.com/hashicorp/terraform-provider-aws.git
+      - run: go install github.com/breathingdust/duvet@main
+      - run: git checkout https://github.com/hashicorp/terraform-provider-aws.git
+      - run: |
           cd terraform-provider-aws
           duvet service -f markdown -d docs -p ../terraform-provider-aws
