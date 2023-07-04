@@ -10,14 +10,14 @@ jobs:
       - ubuntu-latest
     steps:
       - run: |
-        touch main.tf
-        cat << EOF > main.tf
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-    }
-  }
-}
-EOF
+          touch main.tf
+          cat << EOF > main.tf
+          terraform {
+          required_providers {
+          aws = {
+          source  = "hashicorp/aws"
+          }
+          }
+          }
+          EOF
       - run: terraform init
