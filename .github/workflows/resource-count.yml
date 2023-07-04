@@ -1,0 +1,23 @@
+name: Update Resource Counts
+on:
+  workflow_dispatch: {}
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  coverage:
+    runs-on:
+      - ubuntu-latest
+    steps:
+      - run: |
+        touch main.tf
+        cat << EOF > main.tf
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+EOF
+      - run: terraform init
