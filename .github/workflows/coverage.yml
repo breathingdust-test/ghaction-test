@@ -21,3 +21,4 @@ jobs:
       - run: |
           cd terraform-provider-aws
           duvet service -f markdown -d docs -p ../terraform-provider-aws
+          git status
