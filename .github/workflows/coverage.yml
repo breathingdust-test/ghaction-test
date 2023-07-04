@@ -21,4 +21,10 @@ jobs:
       - run: |
           cd terraform-provider-aws
           duvet service -f markdown -d docs -p ../terraform-provider-aws
-          git status
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@153407881ec5c347639a548ade7d8ad1d6740e38 # v5.0.2
+        with:
+          commit-message: "docs: update coverage stats"
+          title: "docs: update coverage stats"
+          body: "This PR updates the experimental resourse level coverage stats found in the contributor documentation."
+          token: ${{ secrets.GH_TOKEN }}
