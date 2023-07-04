@@ -28,5 +28,5 @@ jobs:
           resources=$(terraform providers schema -json | jq '.provider_schemas[] .resource_schemas | length')
           echo $datasources
           echo $resources
-          sed -r -i "s/There are currently ([0-9]+) resources(.*)/There are currently $resources resources\2/" website/docs/index.html.markdown
+          sed -r -i "s/There are currently ([0-9]+) resources and ([0-9]+)(.*)/There are currently $resources resources and $datasources\3/" website/docs/index.html.markdown
           git status
