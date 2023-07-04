@@ -29,4 +29,4 @@ jobs:
         with:
           commit-message: "docs: update coverage stats"
           title: "docs: update coverage stats"
-          body: "This PR updates the experimental resourse level coverage stats found in the contributor documentation."
+          body: "This PR updates the experimental resource level coverage stats found in the contributor documentation."
