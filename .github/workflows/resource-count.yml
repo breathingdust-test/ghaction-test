@@ -1,4 +1,4 @@
-name: Update Resource Counts
+name: Resource Counts
 on:
   workflow_dispatch: {}
 permissions:
