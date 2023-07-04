@@ -9,6 +9,7 @@ jobs:
     runs-on:
       - ubuntu-latest
     steps:
+      - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
       - run: |
           touch main.tf
           cat << EOF > main.tf
@@ -26,3 +27,5 @@ jobs:
           resources=$(terraform providers schema -json | jq '.provider_schemas[] .resource_schemas | length')
           echo $datasources
           echo $resources
+          sed -r -i "s/There are currently ([0-9]+) resources(.*)/There are currently $resources resources\2/" website/docs/index.html.markdown
+          git status
