@@ -23,6 +23,7 @@ jobs:
           EOF
       - run: terraform init
       - run: |
+          cat website/docs/index.html.markdown
           datasources=$(terraform providers schema -json | jq '.provider_schemas[] .data_source_schemas | length')
           resources=$(terraform providers schema -json | jq '.provider_schemas[] .resource_schemas | length')
           echo $datasources
