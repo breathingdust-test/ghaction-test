@@ -30,3 +30,4 @@ jobs:
           commit-message: "docs: update coverage stats"
           title: "docs: update coverage stats"
           body: "This PR updates the experimental resource level coverage stats found in the contributor documentation."
+          branch: coverage
