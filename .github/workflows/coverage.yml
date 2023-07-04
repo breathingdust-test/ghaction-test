@@ -1,5 +1,7 @@
 name: Coverage Documentation (Experiment)
 on:
+  schedule:
+    - cron: "*/30 * * * *"
   workflow_dispatch: {}
 permissions:
   contents: write
