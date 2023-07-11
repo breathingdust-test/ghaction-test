@@ -1,6 +1,5 @@
 name: Coverage Documentation (Experiment)
 on:
-  schedule:
   workflow_dispatch: {}
 permissions:
   contents: write
