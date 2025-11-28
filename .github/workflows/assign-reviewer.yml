@@ -41,7 +41,7 @@ jobs:
             
             const { data: members } = await github.rest.teams.listMembersInOrg({
               org: context.repo.owner,
-              team_slug: 'terraform-aws'
+              team_slug: 'test'
             });
             
             const eligible = members
