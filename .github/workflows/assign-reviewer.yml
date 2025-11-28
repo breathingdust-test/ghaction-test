@@ -13,7 +13,7 @@ jobs:
         id: check_team
         uses: actions/github-script@v7
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.GH_TOKEN }}
           script: |
             try {
               console.log(context.repo.owner);       
@@ -34,7 +34,7 @@ jobs:
         if: steps.check_team.outputs.result == 'true'
         uses: actions/github-script@v7
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.GH_TOKEN }}
           script: |
             const excluded = ['justinretzolk'];
             const author = context.payload.pull_request.user.login;
