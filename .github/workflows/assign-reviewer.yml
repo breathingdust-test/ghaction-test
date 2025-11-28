@@ -16,13 +16,17 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             try {
+              console.log(context.repo.owner);       
+              console.log(context.payload.pull_request.user.login);                          
               await github.rest.teams.getMembershipForUserInOrg({
                 org: context.repo.owner,
                 team_slug: 'test',
                 username: context.payload.pull_request.user.login
               });
+              
               return true;
             } catch (error) {
+              console.log(error);
               return false;
             }
 
