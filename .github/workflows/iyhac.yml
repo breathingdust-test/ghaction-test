@@ -48,14 +48,14 @@ jobs:
           echo "has_maintainer_reviewer=$HAS_MAINTAINER" >> $GITHUB_OUTPUT
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      - name: Assign reviewer
+      - id: assign-reviewer
         if: >
           steps.check-assigned.outputs.has_maintainer_reviewer == 'false' &&
           (steps.check-maintainer.outputs.is_maintainer == 'true' || contains(github.event.pull_request.labels.*.name, 'in-review'))
         uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GH_TOKEN }}
-
+          result-encoding: string
           script: |
             // excluded as they are not part of the reviewer rotation.
             const excluded = ['justinretzolk'];
@@ -107,20 +107,38 @@ jobs:
               pull_number: context.payload.pull_request.number,
               reviewers: [reviewer]
             });
+            return reviewer;
       - name: Send Slack notification
         if: steps.check-maintainer.outputs.is_maintainer == 'true' || github.event.action == 'labeled'
-        run: |
-          AUTHOR="${{ github.event.pull_request.user.login }}"
-          PR_NUMBER="${{ github.event.pull_request.number }}"
-          PR_TITLE="${{ github.event.pull_request.title }}"
+        uses: slackapi/slack-github-action@91efab103c0de0a537f72a35f6b8cda0ee76bf0a # v2.1.1
+        with:
+          webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
+          webhook-type: incoming-webhook
+          payload: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": ":pr: <https://github.com/${{ github.event.pull_request.user.login }}|${{ github.event.pull_request.user.login }}> opened <${{ github.event.pull_request.html_url }}|#${{ github.event.pull_request.number }}> titled \"${{ github.event.pull_request.title }}\". Reviewer assigned.: <https://github.com/${{ steps.assign-reviewer.outputs.result }}|${{ steps.assign-reviewer.outputs.result }}>"
+                  }
+                }
+              ]
+            }
 
-          if [ "${{ github.event.action }}" = "labeled" ]; then
-            MAINTAINER="${{ github.event.sender.login }}"
-            MESSAGE="$MAINTAINER has marked #$PR_NUMBER ($PR_TITLE) by contributor $AUTHOR as requiring review."
-          else
-            MESSAGE="@$AUTHOR has raised #$PR_NUMBER ($PR_TITLE) and requires review."
-          fi
+        # run: |
+        #   AUTHOR="${{ github.event.pull_request.user.login }}"
+        #   PR_NUMBER="${{ github.event.pull_request.number }}"
+        #   PR_TITLE="${{ github.event.pull_request.title }}"
 
-          curl -X POST -H 'Content-type: application/json' \
-            --data "{\"text\":\"$MESSAGE\"}" \
-            "${{ secrets.SLACK_WEBHOOK_URL }}"
+        #   if [ "${{ github.event.action }}" = "labeled" ]; then
+        #     MAINTAINER="${{ github.event.sender.login }}"
+        #     MESSAGE="$MAINTAINER has marked #$PR_NUMBER ($PR_TITLE) by contributor $AUTHOR as requiring review."
+        #   else
+        #     MESSAGE="@$AUTHOR has raised #$PR_NUMBER ($PR_TITLE) and requires review."
+        #   fi
+
+        #   curl -X POST -H 'Content-type: application/json' \
+        #     --data "{\"text\":\"$MESSAGE\"}" \
+        #     "${{ secrets.SLACK_WEBHOOK_URL }}"
