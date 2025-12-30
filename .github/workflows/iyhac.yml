@@ -37,7 +37,7 @@ jobs:
 
           HAS_MAINTAINER=false
           if [ "$REVIEWERS" != "[]" ]; then
-            for reviewer in $(echo "$REVIEWERS" | jq -r '.[]'); do
+            for reviewer in $(echo "$REVIEWERS" | jq -r '.[].login'); do
               echo "Checking reviewer: $reviewer"
               if echo "$TEAM_MEMBERS" | grep -q "^$reviewer$"; then
                 HAS_MAINTAINER=true
