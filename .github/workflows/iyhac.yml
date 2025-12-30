@@ -16,7 +16,7 @@ jobs:
         id: check-maintainer
         run: |
           AUTHOR="${{ github.event.pull_request.user.login }}"
-          TEAM_MEMBERS=$(gh api /orgs/hashicorp/teams/$TEAM_SLUG/members --jq '.[].login')
+          TEAM_MEMBERS=$(gh api /orgs/${{ github.repository_owner }}/teams/$TEAM_SLUG/members --jq '.[].login')
 
           if echo "$TEAM_MEMBERS" | grep -q "^$AUTHOR$"; then
             echo "is_maintainer=true" >> $GITHUB_OUTPUT
@@ -31,7 +31,7 @@ jobs:
         run: |
           REVIEWERS='${{ toJson(github.event.pull_request.requested_reviewers) }}'
 
-          TEAM_MEMBERS=$(gh api /orgs/hashicorp/teams/$TEAM_SLUG/members --jq '.[].login')
+          TEAM_MEMBERS=$(gh api /orgs/${{ github.repository_owner }}/teams/$TEAM_SLUG/members --jq '.[].login')
 
           HAS_MAINTAINER=false
           if [ "$REVIEWERS" != "[]" ]; then
@@ -58,11 +58,11 @@ jobs:
 
           script: |
             // excluded as they are not part of the reviewer rotation.
-            const excluded = ['justinretzolk','marcosentino','vignesh-jayabalan','anurag-hashicorp','breathingdust'];
+            const excluded = ['justinretzolk'];
             const author = context.payload.pull_request.user.login;
 
             const { data: members } = await github.rest.teams.listMembersInOrg({
-              org: "hashicorp",
+              org: context.repo.owner,
               team_slug: process.env.TEAM_SLUG
             });
 
