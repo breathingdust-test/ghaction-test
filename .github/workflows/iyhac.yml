@@ -27,7 +27,6 @@ jobs:
           fi
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-
       - name: Check if terraform-aws member assigned
         id: check-assigned
         run: |
@@ -49,7 +48,6 @@ jobs:
           echo "has_maintainer_reviewer=$HAS_MAINTAINER" >> $GITHUB_OUTPUT
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-
       - name: Assign reviewer
         if: >
           steps.check-assigned.outputs.has_maintainer_reviewer == 'false' &&
@@ -109,9 +107,6 @@ jobs:
               pull_number: context.payload.pull_request.number,
               reviewers: [reviewer]
             });
-      - id: should-message
-        if: (steps.check-maintainer.outputs.is_maintainer == 'true' || github.event.action == 'labeled')
-        run: echo "true" >> $GITHUB_OUTPUT
       - name: Send Slack notification
         if: steps.check-maintainer.outputs.is_maintainer == 'true' || github.event.action == 'labeled'
         run: |
