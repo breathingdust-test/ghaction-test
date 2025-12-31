@@ -1,52 +1,50 @@
-name: IYHAC-ci
+name: Monitor PR Health
 on:
-    status: # External CI (Jenkins, etc.)
-    check_run: # GitHub Actions & Apps
-        types: [completed]
+    pull_request:
+        types: [opened, synchronize]
 
 jobs:
-    gatekeeper:
+    wait-for-checks:
         runs-on: ubuntu-latest
-        # Prevent the action from running on its own status updates to avoid infinite loops
-        if: github.event.check_run.name != 'IYHAC-ci'
-
         steps:
-            - name: Check Overall PR Health
+            - name: Check PR eligibility
+              id: check
               uses: actions/github-script@v7
-              id: health_check
               with:
                   script: |
-                      const sha = context.payload.check_run?.head_sha || context.payload.sha;
+                      const pr = context.payload.pull_request;
+                      const hasInReviewLabel = pr.labels.some(label => label.name === 'in-review');
 
-                      // 1. Fetch the combined status (Commit Statuses)
-                      const { data: combinedStatus } = await github.rest.repos.getCombinedStatusForRef({
-                        owner: context.repo.owner,
-                        repo: context.repo.repo,
-                        ref: sha,
-                      });
+                      const isMaintainer = await github.rest.teams.getMembershipForUserInOrg({
+                        org: context.repo.owner,
+                        team_slug: 'test',
+                        username: pr.user.login
+                      }).then(() => true).catch(() => false);
 
-                      // 2. Fetch all Check Runs (GitHub Actions)
-                      const { data: checkRuns } = await github.rest.checks.listForRef({
-                        owner: context.repo.owner,
-                        repo: context.repo.repo,
-                        ref: sha,
-                      });
+                      const shouldRun = hasInReviewLabel || (isMaintainer && !pr.draft);
+                      core.setOutput('should_run', shouldRun);
 
-                      const allCheckRunsSuccessful = checkRuns.check_runs.every(
-                        run => run.conclusion === 'success' || run.name === 'Global Check Monitor'
-                      );
+            - name: Wait for status to turn green
+              if: steps.check.outputs.should_run == 'true'
+              uses: actions/github-script@v7
+              with:
+                  script: |
+                      const maxAttempts = 12; // 12 * 10 seconds = 2 mins
+                      const delay = 10000; 
 
-                      console.log(`Combined Status State: ${combinedStatus.state}`);
-                      console.log(`All Check Runs Successful: ${allCheckRunsSuccessful}`);
+                      for (let i = 0; i < maxAttempts; i++) {
+                        const { data: status } = await github.rest.repos.getCombinedStatusForRef({
+                          owner: context.repo.owner,
+                          repo: context.repo.repo,
+                          ref: context.payload.pull_request.head.sha,
+                        });
 
-                      // Logic: Is everything finished and green?
-                      if (combinedStatus.state === 'success' && allCheckRunsSuccessful) {
-                        return true;
+                        if (status.state === 'success') {
+                          console.log("Checks passed!");
+                          return true;
+                        }
+
+                        console.log(`Current state: ${status.state}. Waiting...`);
+                        await new Promise(resolve => setTimeout(resolve, delay));
                       }
-                      return false;
-
-            - name: Final Automation
-              if: steps.health_check.outputs.result == 'true'
-              run: |
-                  echo "All checks from all sources are officially GREEN."
-                  # Insert your final deployment, notification, or merge logic here.
+                      throw new Error("Timed out waiting for checks to pass.");
