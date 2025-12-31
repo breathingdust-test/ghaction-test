@@ -41,6 +41,9 @@ jobs:
                           ref: context.payload.pull_request.head.sha,
                         });
 
+                        console.log(`owning repo: ${context.repo.owner}/${context.repo.repo}`);
+                        console.log(`Current ref: ${context.payload.pull_request.head.sha}`);
+
                         if (status.state === 'success') {
                           console.log("Checks passed!");
                           return true;
