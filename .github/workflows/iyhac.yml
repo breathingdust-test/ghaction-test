@@ -109,7 +109,7 @@ jobs:
             });
             return reviewer;
       - name: Send Slack notification for maintainer PR
-        if: steps.check-maintainer.outputs.is_maintainer == 'true'
+        if: steps.check-maintainer.outputs.is_maintainer == 'true' && steps.assign-reviewer.outputs.result != ''
         uses: slackapi/slack-github-action@91efab103c0de0a537f72a35f6b8cda0ee76bf0a # v2.1.1
         with:
           method: chat.postMessage
@@ -130,7 +130,7 @@ jobs:
               ]
             }
       - name: Send Slack notification for labeled PR
-        if: github.event.action == 'labeled'
+        if: github.event.action == 'labeled' && steps.assign-reviewer.outputs.result != ''
         uses: slackapi/slack-github-action@91efab103c0de0a537f72a35f6b8cda0ee76bf0a # v2.1.1
         with:
           method: chat.postMessage

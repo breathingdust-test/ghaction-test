@@ -66,9 +66,9 @@ jobs:
               run: |
                   messages=""
                   cursor=""
-                  
+
                   for i in {1..10}; do
-                    url="https://slack.com/api/conversations.history?channel=${{ secrets.SLACK_CHANNEL_ID }}&limit=50"
+                    url="https://slack.com/api/conversations.history?channel=${{ secrets.SLACK_CHANNEL }}&limit=50"
                     if [[ -n "$cursor" ]]; then
                       url="${url}&cursor=${cursor}"
                     fi
@@ -80,9 +80,9 @@ jobs:
                     cursor=$(echo "$response" | jq -r '.response_metadata.next_cursor // empty')
                     [[ -z "$cursor" ]] && break
                   done
-                  
+
                   ts=$(echo "$messages" | jq -r "select(.app_id == \"${{ secrets.SLACK_APP_ID }}\" and (.text | contains(\"#${{ github.event.pull_request.number }}\"))) | .ts" | head -1)
-                  
+
                   echo "ts=$ts" >> $GITHUB_OUTPUT
 
             - name: Update Slack message with status
