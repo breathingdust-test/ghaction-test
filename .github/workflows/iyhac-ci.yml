@@ -1,7 +1,7 @@
 name: IYHAC-ci
 on:
     check_suite:
-        types: [requested, completed]
+        types: [completed]
 
 jobs:
     notify-slack:
