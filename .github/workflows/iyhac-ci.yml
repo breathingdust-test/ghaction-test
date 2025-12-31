@@ -22,6 +22,7 @@ jobs:
                       }).then(() => true).catch(() => false);
 
                       const shouldRun = hasInReviewLabel || (isMaintainer && !pr.draft);
+                      console.log(`PR eligible for monitoring: ${shouldRun}`);
                       core.setOutput('should_run', shouldRun);
 
             - name: Wait for status to turn green
