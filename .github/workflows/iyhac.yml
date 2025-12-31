@@ -118,6 +118,7 @@ jobs:
             {
               "text": "${{ github.event.pull_request.user.login }} opened #${{ github.event.pull_request.number }} titled \"${{ github.event.pull_request.title }}\". Reviewer assigned.: ${{ steps.assign-reviewer.outputs.result }}",
               "channel": "${{ secrets.SLACK_CHANNEL }}",
+              "unfurl_links": false,
               "blocks": [
                 {
                   "type": "section",
@@ -137,6 +138,7 @@ jobs:
           payload: |
             {
               "channel": "${{ secrets.SLACK_CHANNEL }}",
+              "unfurl_links": false,
               "blocks": [
                 {
                   "type": "section",
