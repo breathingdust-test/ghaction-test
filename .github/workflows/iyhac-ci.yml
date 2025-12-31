@@ -41,15 +41,16 @@ jobs:
                           ref: context.payload.pull_request.head.sha,
                         });
 
-                        const allCompleted = checkRuns.check_runs.every(run => run.status === 'completed');
-                        const allSuccessful = checkRuns.check_runs.every(run => run.conclusion === 'success');
+                        const filteredRuns = checkRuns.check_runs.filter(run => run.name !== 'wait-for-checks');
+                        const allCompleted = filteredRuns.every(run => run.status === 'completed');
+                        const allSuccessful = filteredRuns.every(run => run.conclusion === 'success');
 
                         if (allCompleted && allSuccessful) {
                           console.log("All checks passed!");
                           return true;
                         }
 
-                        console.log(`Checks status: ${checkRuns.check_runs.length} total, completed: ${checkRuns.check_runs.filter(r => r.status === 'completed').length}`);
+                        console.log(`Checks status: ${filteredRuns.length} total, completed: ${filteredRuns.filter(r => r.status === 'completed').length}`);
                         await new Promise(resolve => setTimeout(resolve, delay));
                       }
                       throw new Error("Timed out waiting for checks to pass.");
