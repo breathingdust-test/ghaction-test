@@ -11,6 +11,7 @@ jobs:
               id: check
               uses: actions/github-script@v7
               with:
+                  github-token: ${{ secrets.GH_TOKEN }}
                   script: |
                       const pr = context.payload.pull_request;
                       const hasInReviewLabel = pr.labels.some(label => label.name === 'in-review');
