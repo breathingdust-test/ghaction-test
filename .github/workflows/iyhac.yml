@@ -116,6 +116,7 @@ jobs:
           token: ${{ secrets.SLACK_BOT_TOKEN }}
           payload: |
             {
+              "text": "${{ github.event.pull_request.user.login }} opened #${{ github.event.pull_request.number }} titled \"${{ github.event.pull_request.title }}\". Reviewer assigned.: ${{ steps.assign-reviewer.outputs.result }}",
               "channel": "${{ secrets.SLACK_CHANNEL }}",
               "blocks": [
                 {
