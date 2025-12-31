@@ -95,6 +95,6 @@ jobs:
                   fi
 
                   curl -s -X POST -H "Authorization: Bearer ${{ secrets.SLACK_BOT_TOKEN }}" \
-                    -H "Content-Type: application/json" \
-                    -d "{\"channel\": \"${{ secrets.SLACK_CHANNEL }}\", \"ts\": \"${{ steps.slack_message.outputs.ts }}\", \"name\": \"$emoji\"}" \
+                    -H "Content-Type: application/json; charset=utf-8" \
+                    -d "{\"channel\": \"${{ secrets.SLACK_CHANNEL }}\", \"timestamp\": \"${{ steps.slack_message.outputs.ts }}\", \"name\": \"$emoji\"}" \
                     "https://slack.com/api/reactions.add"
