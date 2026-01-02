@@ -1,7 +1,7 @@
 name: IYHAC - Review Dismissed
 on:
   pull_request_review:
-    types: [dismissed]
+    types: [dismissed, submitted]
 
 jobs:
   notify-review-dismissed:
@@ -52,10 +52,17 @@ jobs:
 
           echo "ts=$ts" >> $GITHUB_OUTPUT
 
-      - name: Send Slack notification
-        if: steps.check.outputs.should_run == 'true'
+      - name: Send Slack notification dismissed
+        if: steps.check.outputs.should_run == 'true' && github.event.review.state == 'dismissed'
         run: |
           curl -s -X POST -H "Authorization: Bearer ${{ secrets.SLACK_BOT_TOKEN }}" \
             -H "Content-Type: application/json" \
             -d "{\"channel\": \"${{ secrets.SLACK_CHANNEL }}\", \"thread_ts\": \"${{ steps.slack_message.outputs.ts }}\", \"text\": \"Review dismissed for PR #${{ github.event.pull_request.number }}: ${{ github.event.pull_request.title }}\"}" \
+            "https://slack.com/api/chat.postMessage"
+      - name: Send Slack notification approved
+        if: steps.check.outputs.should_run == 'true' && github.event.review.state == 'approved'
+        run: |
+          curl -s -X POST -H "Authorization: Bearer ${{ secrets.SLACK_BOT_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d "{\"channel\": \"${{ secrets.SLACK_CHANNEL }}\", \"thread_ts\": \"${{ steps.slack_message.outputs.ts }}\", \"text\": \"PR #${{ github.event.pull_request.number }}: ${{ github.event.pull_request.title }}\" has been approved.}" \
             "https://slack.com/api/chat.postMessage"
