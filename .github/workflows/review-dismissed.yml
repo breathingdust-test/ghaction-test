@@ -63,7 +63,7 @@ jobs:
               "channel": "${{ secrets.SLACK_CHANNEL }}",
               "unfurl_links": false,
               "thread_ts": "${{ steps.slack_message.outputs.ts }}",
-              "text": ":github-dismissed: ${{ github.event.sender.login }} dismissed ${{ github.event.review.user.login }}'s stale <${{ github.event.pull_request.html_url }}/files|review>."
+              "text": ":github-dismissed: <https://github.com/${{ github.event.sender.login }}|${{ github.event.sender.login }}> dismissed <https://github.com/${{ github.event.review.user.login }}|${{ github.event.review.user.login }}>'s stale <${{ github.event.pull_request.html_url }}/files|review>."
             }
 
       - name: Send Slack notification approved
@@ -77,5 +77,5 @@ jobs:
               "channel": "${{ secrets.SLACK_CHANNEL }}",
               "unfurl_links": false,
               "thread_ts": "${{ steps.slack_message.outputs.ts }}",
-              "text": ":bufo-ship: ${{ github.event.sender.login }} approved this <${{ github.event.pull_request.html_url }}/files|pull request>."
+              "text": ":bufo-ship: <https://github.com/${{ github.event.sender.login }}|${{ github.event.sender.login }}> approved this <${{ github.event.pull_request.html_url }}/files|pull request>."
             }
