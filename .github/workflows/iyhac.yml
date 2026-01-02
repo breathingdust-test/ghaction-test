@@ -124,7 +124,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": ":pr: <https://github.com/${{ github.event.pull_request.user.login }}|${{ github.event.pull_request.user.login }}> opened <${{ github.event.pull_request.html_url }}|#${{ github.event.pull_request.number }}> titled \"${{ github.event.pull_request.title }}\". Reviewer assigned: <https://github.com/${{ steps.assign-reviewer.outputs.result }}|${{ steps.assign-reviewer.outputs.result }}>"
+                    "text": ":reviewpr: <https://github.com/${{ github.event.pull_request.user.login }}|${{ github.event.pull_request.user.login }}> opened <${{ github.event.pull_request.html_url }}|#${{ github.event.pull_request.number }}> titled \"${{ github.event.pull_request.title }}\". Reviewer assigned: <https://github.com/${{ steps.assign-reviewer.outputs.result }}|${{ steps.assign-reviewer.outputs.result }}>"
                   }
                 }
               ]
@@ -144,7 +144,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": ":pr: <https://github.com/${{ github.event.sender.login }}|${{ github.event.sender.login }}> has marked <${{ github.event.pull_request.html_url }}|#${{ github.event.pull_request.number }}> titled \"${{ github.event.pull_request.title }}\" as requiring review. Reviewer assigned: <https://github.com/${{ steps.assign-reviewer.outputs.result }}|${{ steps.assign-reviewer.outputs.result }}>"
+                    "text": ":reviewpr: <https://github.com/${{ github.event.sender.login }}|${{ github.event.sender.login }}> has marked <${{ github.event.pull_request.html_url }}|#${{ github.event.pull_request.number }}> titled \"${{ github.event.pull_request.title }}\" as requiring review. Reviewer assigned: <https://github.com/${{ steps.assign-reviewer.outputs.result }}|${{ steps.assign-reviewer.outputs.result }}>"
                   }
                 }
               ]
