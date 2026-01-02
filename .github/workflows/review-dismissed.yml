@@ -65,8 +65,6 @@ jobs:
               "thread_ts": "${{ steps.slack_message.outputs.ts }}",
               "text": ":github-dismissed: ${{ github.event.sender.login }} dismissed ${{ github.event.review.user.login }}'s stale <${{ github.event.pull_request.html_url }}/files|review>."
             }
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
       - name: Send Slack notification approved
         if: steps.check.outputs.should_run == 'true' && github.event.review.state == 'approved'
@@ -81,5 +79,3 @@ jobs:
               "thread_ts": "${{ steps.slack_message.outputs.ts }}",
               "text": ":bufo-shipit: ${{ github.event.sender.login }} approved this <${{ github.event.pull_request.html_url }}/files|pull request>."
             }
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
