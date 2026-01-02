@@ -77,5 +77,5 @@ jobs:
               "channel": "${{ secrets.SLACK_CHANNEL }}",
               "unfurl_links": false,
               "thread_ts": "${{ steps.slack_message.outputs.ts }}",
-              "text": ":bufo-shipit: ${{ github.event.sender.login }} approved this <${{ github.event.pull_request.html_url }}/files|pull request>."
+              "text": ":bufo-ship: ${{ github.event.sender.login }} approved this <${{ github.event.pull_request.html_url }}/files|pull request>."
             }
