@@ -1,4 +1,4 @@
-name: Monitor PR Health
+name: IYHAC - PR Check Status
 on:
     pull_request:
         types: [opened, synchronize]

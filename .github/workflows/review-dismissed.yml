@@ -1,0 +1,57 @@
+name: IYHAC - Review Dismissed
+on:
+  pull_request_review:
+    types: [dismissed]
+
+jobs:
+  notify-review-dismissed:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check PR eligibility
+        id: check
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const hasInReviewLabel = pr.labels.some(label => label.name === 'in-review');
+
+            const isMaintainer = await github.rest.teams.getMembershipForUserInOrg({
+              org: context.repo.owner,
+              team_slug: 'test',
+              username: pr.user.login
+            }).then(() => true).catch(() => false);
+
+            const shouldRun = hasInReviewLabel || (isMaintainer && !pr.draft);
+            core.setOutput('should_run', shouldRun);
+      - name: Find Slack message
+        id: slack_message
+        if: steps.check.outputs.should_run == 'true'
+        run: |
+          messages=""
+          cursor=""
+
+          for i in {1..10}; do
+            url="https://slack.com/api/conversations.history?channel=${{ secrets.SLACK_CHANNEL }}&limit=50"
+            if [[ -n "$cursor" ]]; then
+              url="${url}&cursor=${cursor}"
+            fi
+            
+            response=$(curl -s -H "Authorization: Bearer ${{ secrets.SLACK_BOT_TOKEN }}" "$url")
+            batch=$(echo "$response" | jq -r '.messages[]')
+            messages="${messages}${batch}"
+            
+            cursor=$(echo "$response" | jq -r '.response_metadata.next_cursor // empty')
+            [[ -z "$cursor" ]] && break
+          done
+
+          ts=$(echo "$messages" | jq -r "select(.app_id == \"${{ secrets.SLACK_APP_ID }}\" and (.text | contains(\"#${{ github.event.pull_request.number }}\"))) | .ts" | head -1)
+
+          echo "ts=$ts" >> $GITHUB_OUTPUT
+
+      - name: Send Slack notification
+        if: steps.check.outputs.should_run == 'true'
+        run: |
+          curl -s -X POST -H "Authorization: Bearer ${{ secrets.SLACK_BOT_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d "{\"channel\": \"${{ secrets.SLACK_CHANNEL }}\", \"thread_ts\": \"${{ steps.slack_message.outputs.ts }}\", \"text\": \"Review dismissed for PR #${{ github.event.pull_request.number }}: ${{ github.event.pull_request.title }}\"}" \
+            "https://slack.com/api/chat.postMessage"
