@@ -21,6 +21,8 @@ jobs:
               username: pr.user.login
             }).then(() => true).catch(() => false);
 
+            console.log('username:', pr.user.login);
+
             const shouldRun = hasInReviewLabel || (isMaintainer && !pr.draft);
             core.setOutput('should_run', shouldRun);
       - name: Find Slack message
