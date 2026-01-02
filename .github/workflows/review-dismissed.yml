@@ -64,5 +64,5 @@ jobs:
         run: |
           curl -s -X POST -H "Authorization: Bearer ${{ secrets.SLACK_BOT_TOKEN }}" \
             -H "Content-Type: application/json" \
-            -d "{\"channel\": \"${{ secrets.SLACK_CHANNEL }}\", \"thread_ts\": \"${{ steps.slack_message.outputs.ts }}\", \"text\": \"PR #${{ github.event.pull_request.number }}: ${{ github.event.pull_request.title }}\" has been approved.}" \
+            -d "{\"channel\": \"${{ secrets.SLACK_CHANNEL }}\", \"thread_ts\": \"${{ steps.slack_message.outputs.ts }}\", \"text\": \"PR #${{ github.event.pull_request.number }}: ${{ github.event.pull_request.title }} has been approved.\"}" \
             "https://slack.com/api/chat.postMessage"
