@@ -54,15 +54,28 @@ jobs:
 
       - name: Send Slack notification dismissed
         if: steps.check.outputs.should_run == 'true' && github.event.review.state == 'dismissed'
-        run: |
-          curl -s -X POST -H "Authorization: Bearer ${{ secrets.SLACK_BOT_TOKEN }}" \
-            -H "Content-Type: application/json" \
-            -d "{\"channel\": \"${{ secrets.SLACK_CHANNEL }}\", \"thread_ts\": \"${{ steps.slack_message.outputs.ts }}\", \"text\": \"Review dismissed for PR #${{ github.event.pull_request.number }}: ${{ github.event.pull_request.title }}\"}" \
-            "https://slack.com/api/chat.postMessage"
+        uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          custom_payload: |
+            {
+              channel: '${{ secrets.SLACK_CHANNEL }}',
+              thread_ts: '${{ steps.slack_message.outputs.ts }}',
+              text: ':github-dismissed: ${{ github.event.sender.login }} dismissed ${{ github.event.review.user.login }}\'s stale <${{ github.event.pull_request.html_url }}/files|review>.'
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
       - name: Send Slack notification approved
         if: steps.check.outputs.should_run == 'true' && github.event.review.state == 'approved'
-        run: |
-          curl -s -X POST -H "Authorization: Bearer ${{ secrets.SLACK_BOT_TOKEN }}" \
-            -H "Content-Type: application/json" \
-            -d "{\"channel\": \"${{ secrets.SLACK_CHANNEL }}\", \"thread_ts\": \"${{ steps.slack_message.outputs.ts }}\", \"text\": \"PR #${{ github.event.pull_request.number }}: ${{ github.event.pull_request.title }} has been approved.\"}" \
-            "https://slack.com/api/chat.postMessage"
+        uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          custom_payload: |
+            {
+              channel: '${{ secrets.SLACK_CHANNEL }}',
+              thread_ts: '${{ steps.slack_message.outputs.ts }}',
+              text: ':bufo-shipit: ${{ github.event.sender.login }} approved this <${{ github.event.pull_request.html_url }}/files|pull request>.'
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
