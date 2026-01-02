@@ -24,6 +24,7 @@ jobs:
             console.log('username:', pr.user.login);
 
             const shouldRun = hasInReviewLabel || (isMaintainer && !pr.draft);
+            console.log(`PR eligible for notification: ${shouldRun}`);
             core.setOutput('should_run', shouldRun);
       - name: Find Slack message
         id: slack_message
