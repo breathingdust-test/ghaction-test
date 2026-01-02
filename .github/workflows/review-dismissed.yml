@@ -54,28 +54,32 @@ jobs:
 
       - name: Send Slack notification dismissed
         if: steps.check.outputs.should_run == 'true' && github.event.review.state == 'dismissed'
-        uses: 8398a7/action-slack@v3
+        uses: slackapi/slack-github-action@91efab103c0de0a537f72a35f6b8cda0ee76bf0a # v2.1.1
         with:
-          status: custom
-          custom_payload: |
+          token: ${{ secrets.SLACK_BOT_TOKEN }}
+          method: chat.postMessage
+          payload: |
             {
-              channel: '${{ secrets.SLACK_CHANNEL }}',
-              thread_ts: '${{ steps.slack_message.outputs.ts }}',
-              text: ':github-dismissed: ${{ github.event.sender.login }} dismissed ${{ github.event.review.user.login }}\'s stale <${{ github.event.pull_request.html_url }}/files|review>.'
+              "channel": "${{ secrets.SLACK_CHANNEL }}",
+              "unfurl_links": false,
+              "thread_ts": "${{ steps.slack_message.outputs.ts }}",
+              "text": ":github-dismissed: ${{ github.event.sender.login }} dismissed ${{ github.event.review.user.login }}'s stale <${{ github.event.pull_request.html_url }}/files|review>."
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
       - name: Send Slack notification approved
         if: steps.check.outputs.should_run == 'true' && github.event.review.state == 'approved'
-        uses: 8398a7/action-slack@v3
+        uses: slackapi/slack-github-action@91efab103c0de0a537f72a35f6b8cda0ee76bf0a # v2.1.1
         with:
-          status: custom
-          custom_payload: |
+          token: ${{ secrets.SLACK_BOT_TOKEN }}
+          method: chat.postMessage
+          payload: |
             {
-              channel: '${{ secrets.SLACK_CHANNEL }}',
-              thread_ts: '${{ steps.slack_message.outputs.ts }}',
-              text: ':bufo-shipit: ${{ github.event.sender.login }} approved this <${{ github.event.pull_request.html_url }}/files|pull request>.'
+              "channel": "${{ secrets.SLACK_CHANNEL }}",
+              "unfurl_links": false,
+              "thread_ts": "${{ steps.slack_message.outputs.ts }}",
+              "text": ":bufo-shipit: ${{ github.event.sender.login }} approved this <${{ github.event.pull_request.html_url }}/files|pull request>."
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
