@@ -15,9 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Close stale draft PRs
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GH_REPO: ${{ github.repository }}
         run: |
           # Calculate the date 60 days ago in ISO format (YYYY-MM-DD)
           DATE=2026-04-20
@@ -27,7 +24,7 @@ jobs:
           # Use gh search prs to find open draft PRs matching the criteria
           PRS=$(gh search prs \
             --state open \
-            --repo $GH_REPO \
+            --repo ${{ github.repository }} \
             --draft \
             --updated "<$DATE" \
             --json number \
