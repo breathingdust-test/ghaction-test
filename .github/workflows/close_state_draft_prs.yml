@@ -19,7 +19,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}      
         run: |
           # Calculate the date 60 days ago in ISO format (YYYY-MM-DD)
-          DATE=2026-04-20
+          DATE=2026-04-21
 
           echo "Finding draft PRs updated before $DATE..."
 
