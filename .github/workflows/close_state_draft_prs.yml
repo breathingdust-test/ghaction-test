@@ -27,6 +27,7 @@ jobs:
           # Use gh search prs to find open draft PRs matching the criteria
           PRS=$(gh search prs \
             --state open \
+            --repo $GH_REPO \
             --draft \
             --updated "<$DATE" \
             --json number \
