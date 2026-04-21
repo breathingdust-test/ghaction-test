@@ -27,7 +27,7 @@ jobs:
           DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run || 'false' }}          
         run: |
           # Calculate the date 60 days ago in ISO format (YYYY-MM-DD)
-          DATE=2026-04-21
+          DATE=2026-04-30
 
           echo "Finding draft PRs updated before $DATE..."
 
