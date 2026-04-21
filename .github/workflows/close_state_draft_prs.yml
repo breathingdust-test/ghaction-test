@@ -6,6 +6,12 @@ on:
   schedule:
     - cron: "0 0 * * *"
   workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Describe actions without commenting or closing PRs"
+        required: false
+        type: boolean
+        default: false  
 
 permissions:
   pull-requests: write
@@ -18,6 +24,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}      
           GH_REPO: ${{ github.repository }}
+          DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run || 'false' }}          
         run: |
           # Calculate the date 60 days ago in ISO format (YYYY-MM-DD)
           DATE=2026-04-21
@@ -40,7 +47,11 @@ jobs:
 
           for PR in $PRS; do
             echo "Processing PR #$PR"
-            echo -e "This draft pull request is being closed because it has been inactive for _60 days_ ⏳. This helps our maintainers find and focus on the active contributions.\n\nIf you would like to continue working on this, please reopen the pull request and mark it as ready for review when complete. Thank you!" \
-            | gh pr comment $PR --body-file -
-            gh pr close $PR
+            if [ "$DRY_RUN" = "true" ]; then
+              echo "[DRY RUN] Would comment on and close PR #$PR"
+            else
+              echo -e "This draft pull request is being closed because it has been inactive for _60 days_ ⏳. This helps our maintainers find and focus on the active contributions.\n\nIf you would like to continue working on this, please reopen the pull request and mark it as ready for review when complete. Thank you!" \
+              | gh pr comment $PR --body-file -
+              gh pr close $PR
+            fi
           done
